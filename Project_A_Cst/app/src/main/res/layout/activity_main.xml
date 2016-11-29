@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context="com.example.dllo.project_a_cst.activity.MainActivity">
+
+
+    <LinearLayout
+        android:id="@+id/linearlayout_main_up"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_main_linearlayout_up_height"
+        android:background="@color/mainBlue"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btn_more"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:src="@mipmap/ic_gengduo_normal" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tablayout_main_activity"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            app:tabIndicatorColor="@android:color/transparent"></android.support.design.widget.TabLayout>
+
+        <ImageButton
+            android:id="@+id/btn_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:scaleX="0.7"
+            android:scaleY="0.7"
+            android:src="@mipmap/main_search" />
+
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager_main_activity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linearlayout_main_up"></android.support.v4.view.ViewPager>
+
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/dl_mine"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:visibility="invisible">
+
+        <LinearLayout
+            android:id="@+id/chouti"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:layout_marginRight="@dimen/activity_main_drawerLayout_linearlayout_layout_margin_right"
+            android:background="@android:color/white"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/main_drawerlayout_recyvlerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+
+    </android.support.v4.widget.DrawerLayout>
+
+
+
+
+    <LinearLayout
+        android:id="@+id/linearlayout_main_down"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_main_linearlayout_down_height"
+        android:background="@color/main_down_Linearlayout_Background"
+        android:orientation="vertical"
+
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@mipmap/ic_launcher" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_main_song_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:singleLine="true"
+                    android:text="@string/musicName"
+                    android:focusableInTouchMode="true"/>
+
+                <TextView
+                    android:id="@+id/tv_main_singer"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/MusicSingerName" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_main_play"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:src="@mipmap/bt_minibar_play_normal" />
+
+            <ImageView
+                android:id="@+id/iv_main_play_next"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:src="@mipmap/bt_minibar_next_normal" />
+
+            <ImageView
+                android:id="@+id/iv_main_music_menu"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:src="@mipmap/bt_minibar_playinglist_normal" />
+        </LinearLayout>
+
+    </LinearLayout>
+    <ProgressBar
+        android:id="@+id/progressbar_main"
+        style="@style/StyleProgressBarMusic"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/progress_bar_main_height"
+        android:layout_above="@+id/linearlayout_main_down"
+        android:layout_alignParentBottom="true"
+        android:visibility="visible"/>
+
+</RelativeLayout>

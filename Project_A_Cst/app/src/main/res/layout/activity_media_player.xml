@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <ImageButton
+        android:src="@mipmap/bt_playpage_button_return_normal_new"
+        android:background="@android:color/transparent"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/btn_music_pop_return" />
+    <LinearLayout
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v4.view.ViewPager
+            android:layout_weight="12"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/view_pager_music_pop"></android.support.v4.view.ViewPager>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <ImageView
+                android:src="@mipmap/bt_playpage_button_like_normal_new"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:src="@mipmap/bt_playpage_button_download_normal_new"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:src="@mipmap/bt_playpage_button_share_normal_new"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:src="@mipmap/bt_playpage_button_comment_normal"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:src="@mipmap/bt_playpage_moreactions_normal_new"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <TextView
+                android:gravity="center"
+                android:text="00:00"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/tv_music_pop_first_time" />
+            <SeekBar
+                android:layout_weight="5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/seek_bar_music_pop" />
+            <TextView
+                android:gravity="center"
+                android:text="03:00"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/tv_music_pop_second_time" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_weight="3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <ImageView
+                android:src="@mipmap/bt_playpage_loop_normal_new"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/iv_music_pop_play_mode" />
+            <ImageView
+                android:src="@mipmap/bt_playpage_button_previous_normal_new"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/iv_music_pop_previous" />
+            <ImageView
+                android:scaleX="0.5"
+                android:scaleY="0.5"
+                android:src="@mipmap/bt_playpage_button_play_normal_new"
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/iv_music_pop_play_pause" />
+            <ImageView
+                android:src="@mipmap/bt_playpage_button_next_normal_new"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/iv_music_pop_next" />
+            <ImageView
+                android:src="@mipmap/bt_playpage_button_list_normal_new"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/iv_music_pop_music_list" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"></LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

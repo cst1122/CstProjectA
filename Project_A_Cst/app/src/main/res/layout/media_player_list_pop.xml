@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:background="#f2f2f2"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <ImageView
+            android:scaleY="0.8"
+            android:scaleX="0.8"
+            android:id="@+id/iv_media_player_list_pop"
+            android:src="@mipmap/bt_playpage_loop_normal_new"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/tv_media_player_list_one"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:text="正在播放列表"
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/tv_media_player_list_two"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:text="全部清空"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/lv_media_player_list"
+        android:layout_weight="7"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"></android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

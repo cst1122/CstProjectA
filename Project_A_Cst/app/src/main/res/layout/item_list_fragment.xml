@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="15dp"
+    android:paddingTop="15dp">
+
+    <RelativeLayout
+        android:layout_weight="2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+        <ImageView
+            android:scaleType="fitXY"
+            android:id="@+id/iv_list_fragment_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:src="@mipmap/bt_play_press"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:layout_weight="3"
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_one_list_fragment_item"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:text="热歌榜"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="#d40c01"
+                android:gravity="center_vertical"
+                android:text="1 "
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <TextView
+                android:singleLine="true"
+                android:id="@+id/tv_two_list_fragment_item"
+                android:textSize="12sp"
+                android:gravity="center_vertical"
+                android:text="天若有情"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="#fc8c16"
+                android:gravity="center_vertical"
+                android:text="2 "
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <TextView
+                android:singleLine="true"
+                android:id="@+id/tv_three_list_fragment_item"
+                android:textSize="12sp"
+                android:gravity="center_vertical"
+                android:text="天若有情"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="#ffbf00"
+                android:gravity="center_vertical"
+                android:text="3 "
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <TextView
+                android:singleLine="true"
+                android:id="@+id/tv_four_list_fragment_item"
+                android:textSize="12sp"
+                android:gravity="center_vertical"
+                android:text="天若有情"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+    </LinearLayout>
+    <ImageView
+        android:scaleX="0.2"
+        android:scaleY="0.2"
+        android:src="@mipmap/btn_more_left_arrow_nor"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

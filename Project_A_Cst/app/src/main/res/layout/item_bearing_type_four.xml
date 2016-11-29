@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <ImageView
+            android:id="@+id/iv_bearing_type_four_title"
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <LinearLayout
+            android:layout_marginLeft="5dp"
+            android:orientation="vertical"
+            android:layout_weight="9"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv_bearing_type_four_title"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:text="看不惯我就来打我啊"
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+            <TextView
+                android:id="@+id/tv_bearing_type_four_time"
+                android:text="12:30"
+                android:textSize="10sp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+        </LinearLayout>
+        <TextView
+            android:gravity="center"
+            android:text="推荐"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:background="@color/mainBlue"
+            android:layout_weight="1.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="8dp"/>
+        <ImageView
+            android:src="@mipmap/btn_follow_normal"
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_bearing_type_four_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_bearing_type_four_blue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_bearing_type_four"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <ImageView
+            android:id="@+id/iv_bearing_type_four_song"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:textColor="#217bde"
+            android:gravity="center"
+            android:text="歌单:"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/tv_bearing_type_four_song_name"
+            android:text="古筝轻弹"
+            android:gravity="center_vertical"
+            android:layout_weight="6"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:scaleY="0.5"
+            android:scaleX="0.5"
+            android:src="@mipmap/btn_more_left_arrow_nor"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:layout_marginLeft="160dp"
+            android:src="@mipmap/icon_comment_like_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp" />
+        <TextView
+            android:id="@+id/tv_bearing_type_four_dianzan"
+            android:gravity="center"
+            android:text="点赞"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp" />
+        <ImageView
+            android:src="@mipmap/btn_comment_trends_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp" />
+        <TextView
+            android:id="@+id/tv_bearing_type_four_pinglun"
+            android:gravity="center"
+            android:text="评论"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp" />
+        <ImageView
+            android:src="@mipmap/btn_share_trends_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp" />
+        <TextView
+            android:id="@+id/tv_bearing_type_four_zhuanfa"
+            android:gravity="center"
+            android:text="转发"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp" />
+    </LinearLayout>
+</LinearLayout>
