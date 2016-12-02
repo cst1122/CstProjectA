@@ -6,21 +6,20 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 
-/** MainActivity 最上面的 TabLayout
- * Created by dllo on 16/11/23.
+/** 播放音乐Activity中的适配器
+ * Created by dllo on 16/11/30.
  */
 
-public class MainTabAdapter extends FragmentPagerAdapter{
+public class SongFragmentAdapter extends FragmentPagerAdapter{
     private ArrayList<Fragment> data;
-    private String[] title = {"我的","音乐","动态","直播"};
-
-    public MainTabAdapter(FragmentManager fm, ArrayList<Fragment> data) {
+    public SongFragmentAdapter(FragmentManager fm) {
         super(fm);
-        this.data = data;
     }
 
-    public MainTabAdapter(FragmentManager fm) {
+
+    public SongFragmentAdapter(FragmentManager fm, ArrayList<Fragment> data) {
         super(fm);
+        this.data = data;
     }
 
     @Override
@@ -31,10 +30,5 @@ public class MainTabAdapter extends FragmentPagerAdapter{
     @Override
     public int getCount() {
         return data.size();
-    }
-
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return title[position];
     }
 }

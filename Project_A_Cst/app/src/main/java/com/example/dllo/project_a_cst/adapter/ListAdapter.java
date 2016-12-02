@@ -1,7 +1,6 @@
 package com.example.dllo.project_a_cst.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import com.example.dllo.project_a_cst.bean.ListBean;
 
 import java.util.ArrayList;
 
-/**
+/** 榜单的适配器
  * Created by dllo on 16/11/28.
  */
 
@@ -34,7 +33,6 @@ public class ListAdapter extends BaseAdapter{
 
     @Override
     public int getCount() {
-        Log.d("ListAdapter", data.get(0).getContent().size()+"个");
         return data.get(0).getContent().size();
     }
 

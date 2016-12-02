@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
@@ -16,9 +17,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dllo.project_a_cst.R;
+import com.example.dllo.project_a_cst.adapter.SongFragmentAdapter;
 import com.example.dllo.project_a_cst.bean.MusicBean;
+import com.example.dllo.project_a_cst.main_activity_fragment.SongImageFragment;
+import com.example.dllo.project_a_cst.main_activity_fragment.SongMsgFragment;
+import com.example.dllo.project_a_cst.main_activity_fragment.lyricsFragment;
 import com.example.dllo.project_a_cst.my_class.MyMusicPlayClass;
 import com.example.dllo.project_a_cst.service.MusicService;
+
+import java.util.ArrayList;
 
 /**
  * Created by dllo on 16/11/26.
@@ -34,6 +41,7 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
     private ServiceConnection connection;
     private MyMusicPlayClass myMusicPlayClass;
     private Intent mIntent;
+    private ArrayList<Fragment> fragmentData;
 
     @Override
     int setlaouyt() {
@@ -64,6 +72,13 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
         ivMusicList.setOnClickListener(this);
         tvFirstTime.setOnClickListener(this);
         tvSecondTime.setOnClickListener(this);
+        fragmentData = new ArrayList<>();
+        fragmentData.add(new SongMsgFragment());
+        fragmentData.add(new SongImageFragment());
+        fragmentData.add(new lyricsFragment());
+        SongFragmentAdapter adapter = new SongFragmentAdapter(getSupportFragmentManager(),fragmentData);
+        viewPager.setAdapter(adapter);
+
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

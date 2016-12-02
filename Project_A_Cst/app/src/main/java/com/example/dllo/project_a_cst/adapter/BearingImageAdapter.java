@@ -13,7 +13,7 @@ import com.example.dllo.project_a_cst.bean.BearingBean;
 
 import java.util.ArrayList;
 
-/**
+/** 动态界面中用来加载图片的适配器  moreType 代表图片数量
  * Created by dllo on 16/11/28.
  */
 

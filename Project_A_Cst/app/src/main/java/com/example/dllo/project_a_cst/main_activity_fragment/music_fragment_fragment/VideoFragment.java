@@ -5,18 +5,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.dllo.project_a_cst.R;
 import com.example.dllo.project_a_cst.adapter.VideoAdapter;
 import com.example.dllo.project_a_cst.bean.VideoBean;
+import com.example.dllo.project_a_cst.else_class.MyNetListener;
+import com.example.dllo.project_a_cst.else_class.NetHelper;
 import com.example.dllo.project_a_cst.main_activity_fragment.BaseFragment;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
+
+import static com.example.dllo.project_a_cst.my_class.MyConstants.VIDEO_FRAGMENT_HEAT_URL;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.VIDEO_FRAGMENT_NEW_URL;
 
 /**
  * Created by dllo on 16/11/23.
@@ -26,8 +26,8 @@ public class VideoFragment extends BaseFragment implements View.OnClickListener 
     private RecyclerView recyclerView;
     private ArrayList<VideoBean> data;
     private TextView tvNew,tvHeat;
-    private String urlNew = "http://tingapi.ting.baidu.com/v1/restserver/ting?from=android&version=5.9.0.0&channel=360safe&operator=3&provider=11%2C12&method=baidu.ting.mv.searchMV&format=json&order=1&page_num=1&page_size=20&query=%E5%85%A8%E9%83%A8";
-    private String urlHeat = "http://tingapi.ting.baidu.com/v1/restserver/ting?from=android&version=5.9.0.0&channel=360safe&operator=3&provider=11%2C12&method=baidu.ting.mv.searchMV&format=json&order=0&page_num=1&page_size=20&query=%E5%85%A8%E9%83%A8";
+    private String urlNew = VIDEO_FRAGMENT_NEW_URL;
+    private String urlHeat = VIDEO_FRAGMENT_HEAT_URL;
     @Override
     public int setlayout() {
         return R.layout.music_fragment_video_fragment;
@@ -49,26 +49,23 @@ public class VideoFragment extends BaseFragment implements View.OnClickListener 
     }
 
     private void startVolley (String url) {
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
+
+        NetHelper.myRequest(url, new MyNetListener<VideoBean>() {
             @Override
-            public void onResponse(String response) {
-                data = new ArrayList<>();
-                Gson gson = new Gson();
-                VideoBean bean = gson.fromJson(response,VideoBean.class);
-                data.add(bean);
+            public void successListener(VideoBean response) {
+                data = new ArrayList<VideoBean>();
+                data.add(response);
                 VideoAdapter adapter = new VideoAdapter(getActivity());
                 adapter.setData(data);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void errorListener(VolleyError error) {
 
             }
-        });
-        requestQueue.add(stringRequest);
+        },VideoBean.class);
     }
 
     @Override

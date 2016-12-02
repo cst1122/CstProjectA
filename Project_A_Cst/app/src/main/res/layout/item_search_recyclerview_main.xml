@@ -5,6 +5,7 @@
 
 
     <TextView
+        android:id="@+id/sousuo"
         android:text="搜索"
         android:textSize="50sp"
         android:gravity="center"

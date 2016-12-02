@@ -1,29 +1,32 @@
 package com.example.dllo.project_a_cst.main_activity_fragment.music_fragment_fragment;
 
+import android.content.Intent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.dllo.project_a_cst.R;
 import com.example.dllo.project_a_cst.adapter.ListAdapter;
 import com.example.dllo.project_a_cst.bean.ListBean;
+import com.example.dllo.project_a_cst.else_class.MyNetListener;
+import com.example.dllo.project_a_cst.else_class.NetHelper;
 import com.example.dllo.project_a_cst.main_activity_fragment.BaseFragment;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
+
+import static com.example.dllo.project_a_cst.my_class.MyConstants.LIST_FRAGMENT_URL;
 
 /**
  * Created by dllo on 16/11/23.
  */
 
-public class ListFragment extends BaseFragment{
+public class ListFragment extends BaseFragment {
+
     private ListView listView;
-    private ArrayList<ListBean>data;
-    private String url = "http://tingapi.ting.baidu.com/v1/restserver/ting?from=android&version=5.9.0.0&channel=360safe&operator=3&method=baidu.ting.billboard.billCategory&format=json&kflag=2";
+    private ArrayList<ListBean> data;
+    private String url = LIST_FRAGMENT_URL;
+
     @Override
     public int setlayout() {
         return R.layout.music_fragment_list_fragment;
@@ -31,29 +34,37 @@ public class ListFragment extends BaseFragment{
 
     @Override
     public void initView(View view) {
-        listView = bindView(R.id.list_view_list_fragment);
+        listView = (ListView) view.findViewById(R.id.list_view_list_fragment);
+
     }
 
     @Override
     public void initData() {
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
+        NetHelper.myRequest(url, new MyNetListener<ListBean>() {
             @Override
-            public void onResponse(String response) {
+            public void successListener(ListBean response) {
                 data = new ArrayList<>();
-                Gson gson = new Gson();
-                ListBean bean = gson.fromJson(response,ListBean.class);
-                data.add(bean);
+                data.add(response);
                 ListAdapter adapter = new ListAdapter(getActivity());
                 adapter.setData(data);
                 listView.setAdapter(adapter);
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void errorListener(VolleyError error) {
 
             }
+        },ListBean.class);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent("开启榜单");
+                intent.putExtra("图片网址",data.get(0).getContent().get(position).getPic_s210());
+                intent.putExtra("type",data.get(0).getContent().get(position).getType());
+                getActivity().sendBroadcast(intent);
+            }
         });
-        requestQueue.add(stringRequest);
     }
+
 }

@@ -14,7 +14,7 @@ import com.example.dllo.project_a_cst.bean.VideoBean;
 
 import java.util.ArrayList;
 
-/**
+/** 视频的适配器
  * Created by dllo on 16/11/28.
  */
 

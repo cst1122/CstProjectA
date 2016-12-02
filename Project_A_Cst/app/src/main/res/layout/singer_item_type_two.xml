@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="70dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="70dp">
+
+    <TextView
+        android:id="@+id/tv_singer_item_type_two"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:text="华语男歌手"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"/>
+    <ImageView
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/btn_more_left_arrow_nor"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"/>
+
+</RelativeLayout>
+    
+</LinearLayout>

@@ -2,5 +2,12 @@
     <string name="app_name">Project_A_Cst</string>
     <string name="musicName">本程序有一定几率崩溃 请使用者见谅</string>
     <string name="MusicSingerName">By cst</string>
+    <string name="act_mp_time_initial">00:00</string>
+    <string name="act_mp_time_total">03:00</string>
+    <string name="fragment_mine_local_music">本地音乐</string>
+    <string name="fragment_mine_local_music_num">92首</string>
+    <string name="fragment_mine_recently_played">最近播放</string>
+    <string name="fragment_mine_download">我的下载</string>
+    <string name="fragment_mine_self_built_song_list">自建歌单</string>
 
 </resources>

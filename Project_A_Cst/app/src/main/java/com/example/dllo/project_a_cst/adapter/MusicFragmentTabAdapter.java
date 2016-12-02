@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 
-/**
+/** 音乐界面中的TabLayout
  * Created by dllo on 16/11/23.
  */
 

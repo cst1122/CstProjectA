@@ -34,5 +34,7 @@ dependencies {
     compile 'com.youth.banner:banner:1.4.4'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'eu.the4thfloor.volley:com.android.volley:2015.05.28'
-
+    compile 'me.yokeyword:fragmentation:0.8.2'
+    compile 'me.yokeyword:fragmentation-swipeback:0.7.9'
+    compile 'org.greenrobot:eventbus:3.0.0'
 }

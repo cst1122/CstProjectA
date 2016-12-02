@@ -1,6 +1,8 @@
 package com.example.dllo.project_a_cst.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,26 +11,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.dllo.project_a_cst.R;
 import com.example.dllo.project_a_cst.bean.RecommendBean;
 import com.example.dllo.project_a_cst.my_class.GlideImageloader;
+import com.example.dllo.project_a_cst.my_class.MyMusicPlayClass;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 
 import java.util.ArrayList;
 
-/**
+/** 音乐界面 推荐页面的适配器
  * Created by dllo on 16/11/25.
  */
 
-public class RecommendAdapter extends RecyclerView.Adapter{
+public class RecommendAdapter extends RecyclerView.Adapter {
     private Context context;
     private ArrayList<RecommendBean> data;
-    private int[] MainType,countType={1,2,3,4,5,6,7,8,9};
+    private int[] MainType, countType = {1, 2, 3, 4, 5, 6, 7, 8, 9};
     private ArrayList<String> url;
 
 
@@ -60,25 +64,25 @@ public class RecommendAdapter extends RecyclerView.Adapter{
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holder = null;
-        switch (viewType){
+        switch (viewType) {
             case 1:
-                View viewOne = LayoutInflater.from(context).inflate(R.layout.item_recommend_fragment_type_one,parent,false);
+                View viewOne = LayoutInflater.from(context).inflate(R.layout.item_recommend_fragment_type_one, parent, false);
                 holder = new MyFirstHolder(viewOne);
                 break;
             case 2:
-                View viewTwo = LayoutInflater.from(context).inflate(R.layout.item_recommend_fragment_type_two,parent,false);
+                View viewTwo = LayoutInflater.from(context).inflate(R.layout.item_recommend_fragment_type_two, parent, false);
                 holder = new MySecondHolder(viewTwo);
                 break;
             case 3:
-                View viewThree = LayoutInflater.from(context).inflate(R.layout.item_recommend_fragment_type_three,parent,false);
+                View viewThree = LayoutInflater.from(context).inflate(R.layout.item_recommend_fragment_type_three, parent, false);
                 holder = new MyThirdHolder(viewThree);
                 break;
             case 4:
-                View viewFour = LayoutInflater.from(context).inflate(R.layout.item_recommend_fragment_type_four,parent,false);
+                View viewFour = LayoutInflater.from(context).inflate(R.layout.item_recommend_fragment_type_four, parent, false);
                 holder = new MyFourthHolder(viewFour);
                 break;
             case 5:
-                View viewFive = LayoutInflater.from(context).inflate(R.layout.item_recommend_fragment_type_five,parent,false);
+                View viewFive = LayoutInflater.from(context).inflate(R.layout.item_recommend_fragment_type_five, parent, false);
                 holder = new MyFifthHolder(viewFive);
                 break;
         }
@@ -86,115 +90,165 @@ public class RecommendAdapter extends RecyclerView.Adapter{
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         int type = countType[position];
-        switch (type){
+        switch (type) {
             // 轮播图和四个图标
             case 1:
-                ((MyFirstHolder)holder).banner.setImages(url)
-                .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
-                .setImageLoader(new GlideImageloader())
-                .setBannerAnimation(Transformer.DepthPage)
-                .isAutoPlay(true)
-                .setDelayTime(5000)
-                .setIndicatorGravity(BannerConfig.CENTER)
-                .start();
+                ((MyFirstHolder) holder).banner.setImages(url)
+                        .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
+                        .setImageLoader(new GlideImageloader())
+                        .setBannerAnimation(Transformer.DepthPage)
+                        .isAutoPlay(true)
+                        .setDelayTime(5000)
+                        .setIndicatorGravity(BannerConfig.CENTER)
+                        .start();
                 Glide.with(context).load(data.get(0).getResult().getEntry().getResult().get(0).getIcon())
-                .into(((MyFirstHolder)holder).ivOne);
+                        .into(((MyFirstHolder) holder).ivOne);
                 Glide.with(context).load(data.get(0).getResult().getEntry().getResult().get(1).getIcon())
-                        .into(((MyFirstHolder)holder).ivTwo);
+                        .into(((MyFirstHolder) holder).ivTwo);
                 Glide.with(context).load(data.get(0).getResult().getEntry().getResult().get(2).getIcon())
-                        .into(((MyFirstHolder)holder).ivThree);
+                        .into(((MyFirstHolder) holder).ivThree);
                 Glide.with(context).load(data.get(0).getResult().getEntry().getResult().get(3).getIcon())
-                        .into(((MyFirstHolder)holder).ivFour);
+                        .into(((MyFirstHolder) holder).ivFour);
                 Log.d("RecommendAdapter", "轮播图和四个图标");
+
+
+                // 开启歌手的抽屉
+                ((MyFirstHolder) holder).llSinger.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ((MyFirstHolder) holder).llSinger.setClickable(false);
+                        MyMusicPlayClass.startDrawer("歌手", ((MyFirstHolder) holder).recyclerView, ((MyFirstHolder) holder).singerDl
+                                , context, new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false) {
+                                    @Override
+                                    public boolean canScrollVertically() {
+                                        return false;
+                                    }
+                                });
+                    }
+                });
+
+                // 开启歌曲分类的抽屉
+                ((MyFirstHolder) holder).llSongClassification.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ((MyFirstHolder) holder).llSongClassification.setClickable(false);
+                        MyMusicPlayClass.startDrawer("歌曲分类", ((MyFirstHolder) holder).recyclerView, ((MyFirstHolder) holder).singerDl
+                                , context, new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+                    }
+                });
+                ((MyFirstHolder) holder).singerDl.setDrawerListener(new DrawerLayout.DrawerListener() {
+                    @Override
+                    public void onDrawerSlide(View drawerView, float slideOffset) {
+
+                    }
+
+                    @Override
+                    public void onDrawerOpened(View drawerView) {
+
+                    }
+
+                    @Override
+                    public void onDrawerClosed(View drawerView) {
+                        ((MyFirstHolder) holder).singerDl.setVisibility(View.GONE);
+                        ((MyFirstHolder) holder).llSinger.setClickable(true);
+                        ((MyFirstHolder) holder).llSongClassification.setClickable(true);
+                        ((MyFirstHolder) holder).recyclerView.destroyDrawingCache();
+                    }
+
+                    @Override
+                    public void onDrawerStateChanged(int newState) {
+
+                    }
+                });
                 break;
             // 歌单推荐
             case 2:
-                Glide.with(context).load(data.get(0).getModule().get(3).getPicurl()).into(((MySecondHolder)holder).iv);
-                ((MySecondHolder)holder).tv.setText("歌单推荐");
+                Glide.with(context).load(data.get(0).getModule().get(3).getPicurl()).into(((MySecondHolder) holder).iv);
+                ((MySecondHolder) holder).tv.setText("歌单推荐");
                 RecommendTypeTwoAdapter twoAdapter = new RecommendTypeTwoAdapter(context);
                 twoAdapter.setData(data);
-                int[] twoType = {1,1,1,1,1,1};
+                int[] twoType = {1, 1, 1, 1, 1, 1};
                 twoAdapter.setTYPE(twoType);
-                ((MySecondHolder)holder).rv.setAdapter(twoAdapter);
-                ((MySecondHolder)holder).rv.setLayoutManager(new GridLayoutManager(context,3));
+                ((MySecondHolder) holder).rv.setAdapter(twoAdapter);
+                ((MySecondHolder) holder).rv.setLayoutManager(new GridLayoutManager(context, 3));
                 Log.d("RecommendAdapter", "歌单推荐");
                 break;
             // 新碟上架
             case 3:
-                Glide.with(context).load(data.get(0).getModule().get(5).getPicurl()).into(((MySecondHolder)holder).iv);
-                ((MySecondHolder)holder).tv.setText("新碟上架");
+                Glide.with(context).load(data.get(0).getModule().get(5).getPicurl()).into(((MySecondHolder) holder).iv);
+                ((MySecondHolder) holder).tv.setText("新碟上架");
                 RecommendTypeThreeAdapter threeAdapter = new RecommendTypeThreeAdapter(context);
                 threeAdapter.setData(data);
-                int[] threeType = {1,1,1,1,1,1};
+                int[] threeType = {1, 1, 1, 1, 1, 1};
                 threeAdapter.setTYPE(threeType);
-                ((MySecondHolder)holder).rv.setAdapter(threeAdapter);
-                ((MySecondHolder)holder).rv.setLayoutManager(new GridLayoutManager(context,3));
+                ((MySecondHolder) holder).rv.setAdapter(threeAdapter);
+                ((MySecondHolder) holder).rv.setLayoutManager(new GridLayoutManager(context, 3));
                 Log.d("RecommendAdapter", "新碟上架");
                 break;
             // 热销专辑
             case 4:
-                Glide.with(context).load(data.get(0).getModule().get(6).getPicurl()).into(((MyThirdHolder)holder).iv);
-                ((MyThirdHolder)holder).tv.setText("热销专辑");
+                Glide.with(context).load(data.get(0).getModule().get(6).getPicurl()).into(((MyThirdHolder) holder).iv);
+                ((MyThirdHolder) holder).tv.setText("热销专辑");
                 RecommendTypeThreeAdapter fourAdapter = new RecommendTypeThreeAdapter(context);
                 fourAdapter.setData(data);
-                int[] fourType = {3,3,3};
+                int[] fourType = {3, 3, 3};
                 fourAdapter.setTYPE(fourType);
-                ((MyThirdHolder)holder).rv.setAdapter(fourAdapter);
-                ((MyThirdHolder)holder).rv.setLayoutManager(new GridLayoutManager(context,3));
+                ((MyThirdHolder) holder).rv.setAdapter(fourAdapter);
+                ((MyThirdHolder) holder).rv.setLayoutManager(new GridLayoutManager(context, 3));
                 Log.d("RecommendAdapter", "热销专辑");
                 break;
             // 广告
             case 5:
                 Glide.with(context).load(data.get(0).getResult().getMod_26().getResult().get(0).getPic())
-                        .into(((MyFourthHolder)holder).iv);
+                        .into(((MyFourthHolder) holder).iv);
                 Log.d("RecommendAdapter", "广告");
                 break;
             // 原创音乐
             case 6:
-                Glide.with(context).load(data.get(0).getModule().get(10).getPicurl()).into(((MyThirdHolder)holder).iv);
-                ((MyThirdHolder)holder).tv.setText("原创音乐");
+                Glide.with(context).load(data.get(0).getModule().get(10).getPicurl()).into(((MyThirdHolder) holder).iv);
+                ((MyThirdHolder) holder).tv.setText("原创音乐");
                 RecommendTypeTwoAdapter sixAdapter = new RecommendTypeTwoAdapter(context);
                 sixAdapter.setData(data);
-                int[] sixType = {3,3,3};
+                int[] sixType = {3, 3, 3};
                 sixAdapter.setTYPE(sixType);
-                ((MyThirdHolder)holder).rv.setAdapter(sixAdapter);
-                ((MyThirdHolder)holder).rv.setLayoutManager(new GridLayoutManager(context,3));
+                ((MyThirdHolder) holder).rv.setAdapter(sixAdapter);
+                ((MyThirdHolder) holder).rv.setLayoutManager(new GridLayoutManager(context, 3));
                 Log.d("RecommendAdapter", "原创音乐");
                 break;
             // 最热MV推荐
             case 7:
-                Glide.with(context).load(data.get(0).getModule().get(11).getPicurl()).into(((MyThirdHolder)holder).iv);
-                ((MyThirdHolder)holder).tv.setText("最热MV推荐");
+                Glide.with(context).load(data.get(0).getModule().get(11).getPicurl()).into(((MyThirdHolder) holder).iv);
+                ((MyThirdHolder) holder).tv.setText("最热MV推荐");
                 RecommendTypeThreeAdapter sevenAdapter = new RecommendTypeThreeAdapter(context);
                 sevenAdapter.setData(data);
-                int[] sevenType = {2,2,2,2,2,2};
+                int[] sevenType = {2, 2, 2, 2, 2, 2};
                 sevenAdapter.setTYPE(sevenType);
-                ((MyThirdHolder)holder).rv.setAdapter(sevenAdapter);
-                ((MyThirdHolder)holder).rv.setLayoutManager(new GridLayoutManager(context,3));
+                ((MyThirdHolder) holder).rv.setAdapter(sevenAdapter);
+                ((MyThirdHolder) holder).rv.setLayoutManager(new GridLayoutManager(context, 3));
                 Log.d("RecommendAdapter", "最热MV推荐");
                 break;
             // 乐播节目
             case 8:
-                Glide.with(context).load(data.get(0).getModule().get(12).getPicurl()).into(((MySecondHolder)holder).iv);
-                ((MySecondHolder)holder).tv.setText("乐播节目");
+                Glide.with(context).load(data.get(0).getModule().get(12).getPicurl()).into(((MySecondHolder) holder).iv);
+                ((MySecondHolder) holder).tv.setText("乐播节目");
                 RecommendTypeTwoAdapter eightAdapter = new RecommendTypeTwoAdapter(context);
                 eightAdapter.setData(data);
-                int[] eightType = {2,2,2,2,2,2};
+                int[] eightType = {2, 2, 2, 2, 2, 2};
                 eightAdapter.setTYPE(eightType);
-                ((MySecondHolder)holder).rv.setAdapter(eightAdapter);
-                ((MySecondHolder)holder).rv.setLayoutManager(new GridLayoutManager(context,3));
+                ((MySecondHolder) holder).rv.setAdapter(eightAdapter);
+                ((MySecondHolder) holder).rv.setLayoutManager(new GridLayoutManager(context, 3));
                 Log.d("RecommendAdapter", "乐播节目");
                 break;
             // 专栏
             case 9:
-                Glide.with(context).load(data.get(0).getModule().get(13).getPicurl()).into(((MyFifthHolder)holder).iv);
-                ((MyFifthHolder)holder).tv.setText("专栏");
+                Glide.with(context).load(data.get(0).getModule().get(13).getPicurl()).into(((MyFifthHolder) holder).iv);
+                ((MyFifthHolder) holder).tv.setText("专栏");
                 RecommendTypeFiveAdapter nineAdapter = new RecommendTypeFiveAdapter(context);
                 nineAdapter.setData(data);
-                ((MyFifthHolder)holder).rv.setAdapter(nineAdapter);
-                ((MyFifthHolder)holder).rv.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
+                ((MyFifthHolder) holder).rv.setAdapter(nineAdapter);
+                ((MyFifthHolder) holder).rv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
                 Log.d("RecommendAdapter", "专栏");
                 break;
 
@@ -206,22 +260,35 @@ public class RecommendAdapter extends RecyclerView.Adapter{
         return 9;
     }
 
+
     class MyFirstHolder extends RecyclerView.ViewHolder {
-        private ImageView ivOne,ivTwo,ivThree,ivFour;
+        private ImageView ivOne, ivTwo, ivThree, ivFour;
         private Banner banner;
+        private LinearLayout llSinger, llSongClassification;
+        private DrawerLayout singerDl;
+        private RecyclerView recyclerView;
+        private Activity mActivity;
+
         public MyFirstHolder(View itemView) {
             super(itemView);
+            mActivity = (Activity) context;
             ivOne = (ImageView) itemView.findViewById(R.id.iv_type_one_singer);
             ivTwo = (ImageView) itemView.findViewById(R.id.iv_type_one_music_fenlei);
             ivThree = (ImageView) itemView.findViewById(R.id.iv_type_one_diantai);
             ivFour = (ImageView) itemView.findViewById(R.id.iv_type_one_vip);
             banner = (Banner) itemView.findViewById(R.id.banner_type_one);
+            llSinger = (LinearLayout) itemView.findViewById(R.id.recommend_singer);
+            llSongClassification = (LinearLayout) itemView.findViewById(R.id.recommend_song_classification);
+            singerDl = (DrawerLayout) mActivity.findViewById(R.id.dl_mine);
+            recyclerView = (RecyclerView) mActivity.findViewById(R.id.main_drawerlayout_recyvlerview);
         }
     }
-    class MySecondHolder extends RecyclerView.ViewHolder{
+
+    class MySecondHolder extends RecyclerView.ViewHolder {
         private RecyclerView rv;
         private ImageView iv;
         private TextView tv;
+
         public MySecondHolder(View itemView) {
             super(itemView);
             rv = (RecyclerView) itemView.findViewById(R.id.recycler_view_type_two);
@@ -229,10 +296,12 @@ public class RecommendAdapter extends RecyclerView.Adapter{
             tv = (TextView) itemView.findViewById(R.id.tv_type_two);
         }
     }
-    class MyThirdHolder extends RecyclerView.ViewHolder{
+
+    class MyThirdHolder extends RecyclerView.ViewHolder {
         private RecyclerView rv;
         private ImageView iv;
         private TextView tv;
+
         public MyThirdHolder(View itemView) {
             super(itemView);
             rv = (RecyclerView) itemView.findViewById(R.id.recycler_view_type_three);
@@ -240,17 +309,21 @@ public class RecommendAdapter extends RecyclerView.Adapter{
             tv = (TextView) itemView.findViewById(R.id.tv_type_three);
         }
     }
-    class MyFourthHolder extends RecyclerView.ViewHolder{
+
+    class MyFourthHolder extends RecyclerView.ViewHolder {
         private ImageView iv;
+
         public MyFourthHolder(View itemView) {
             super(itemView);
             iv = (ImageView) itemView.findViewById(R.id.iv_type_four);
         }
     }
-    class MyFifthHolder extends RecyclerView.ViewHolder{
+
+    class MyFifthHolder extends RecyclerView.ViewHolder {
         private RecyclerView rv;
         private ImageView iv;
         private TextView tv;
+
         public MyFifthHolder(View itemView) {
             super(itemView);
             rv = (RecyclerView) itemView.findViewById(R.id.recycler_view_type_five);

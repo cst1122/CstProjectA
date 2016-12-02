@@ -14,7 +14,7 @@ import com.example.dllo.project_a_cst.bean.SongListBean;
 
 import java.util.ArrayList;
 
-/**
+/** 歌单的适配器
  * Created by dllo on 16/11/26.
  */
 

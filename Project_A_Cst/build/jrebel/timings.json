@@ -1,402 +1,346 @@
 {
     "timings": [
         {
-            "start": 1480400999829,
+            "start": 1480672692053,
             "type": "Configuration",
             "report": true,
-            "finish": 1480401004245,
+            "finish": 1480672695668,
             "project": null,
             "name": null
         },
         {
-            "start": 1480401004326,
+            "start": 1480672730442,
             "type": "DefaultTask",
             "report": false,
-            "finish": 1480401004334,
+            "finish": 1480672730443,
             "project": ":app",
             "name": "preBuild"
         },
         {
-            "start": 1480401004334,
+            "start": 1480672730444,
             "type": "DefaultTask",
             "report": false,
-            "finish": 1480401004335,
+            "finish": 1480672730446,
             "project": ":app",
             "name": "preDebugBuild"
         },
         {
-            "start": 1480401004335,
+            "start": 1480672730447,
             "type": "CheckManifest",
             "report": false,
-            "finish": 1480401004336,
+            "finish": 1480672730448,
             "project": ":app",
             "name": "checkDebugManifest"
         },
         {
-            "start": 1480401004336,
+            "start": 1480672730448,
             "type": "DefaultTask",
             "report": false,
-            "finish": 1480401004336,
+            "finish": 1480672730448,
             "project": ":app",
             "name": "preReleaseBuild"
         },
         {
-            "start": 1480401004337,
+            "start": 1480672730448,
             "type": "PrepareLibraryTask",
             "report": false,
-            "finish": 1480401004437,
+            "finish": 1480672730488,
             "project": ":app",
             "name": "prepareComAndroidSupportAnimatedVectorDrawable2421Library"
         },
         {
-            "start": 1480401004439,
+            "start": 1480672730489,
             "type": "PrepareLibraryTask",
             "report": false,
-            "finish": 1480401005417,
+            "finish": 1480672730561,
             "project": ":app",
             "name": "prepareComAndroidSupportAppcompatV72421Library"
         },
         {
-            "start": 1480401005417,
+            "start": 1480672730562,
             "type": "PrepareLibraryTask",
             "report": false,
-            "finish": 1480401005500,
+            "finish": 1480672730563,
             "project": ":app",
             "name": "prepareComAndroidSupportCardviewV72421Library"
         },
         {
-            "start": 1480401005500,
+            "start": 1480672730563,
             "type": "PrepareLibraryTask",
             "report": false,
-            "finish": 1480401005523,
+            "finish": 1480672730572,
             "project": ":app",
             "name": "prepareComAndroidSupportDesign2421Library"
         },
         {
-            "start": 1480401005523,
+            "start": 1480672730573,
             "type": "PrepareLibraryTask",
             "report": false,
-            "finish": 1480401005585,
+            "finish": 1480672730576,
             "project": ":app",
             "name": "prepareComAndroidSupportRecyclerviewV72421Library"
         },
         {
-            "start": 1480401005585,
+            "start": 1480672730577,
             "type": "PrepareLibraryTask",
             "report": false,
-            "finish": 1480401005591,
+            "finish": 1480672730579,
             "project": ":app",
             "name": "prepareComAndroidSupportSupportCompat2421Library"
         },
         {
-            "start": 1480401005591,
+            "start": 1480672730579,
             "type": "PrepareLibraryTask",
             "report": false,
-            "finish": 1480401005593,
+            "finish": 1480672730580,
             "project": ":app",
             "name": "prepareComAndroidSupportSupportCoreUi2421Library"
         },
         {
-            "start": 1480401005593,
+            "start": 1480672730580,
             "type": "PrepareLibraryTask",
             "report": false,
-            "finish": 1480401005603,
+            "finish": 1480672730581,
             "project": ":app",
             "name": "prepareComAndroidSupportSupportCoreUtils2421Library"
         },
         {
-            "start": 1480401005603,
+            "start": 1480672730582,
             "type": "PrepareLibraryTask",
             "report": false,
-            "finish": 1480401005608,
+            "finish": 1480672730585,
             "project": ":app",
             "name": "prepareComAndroidSupportSupportFragment2421Library"
         },
         {
-            "start": 1480401005608,
+            "start": 1480672730586,
             "type": "PrepareLibraryTask",
             "report": false,
-            "finish": 1480401005612,
+            "finish": 1480672730588,
             "project": ":app",
             "name": "prepareComAndroidSupportSupportMediaCompat2421Library"
         },
         {
-            "start": 1480401005613,
+            "start": 1480672730588,
             "type": "PrepareLibraryTask",
             "report": false,
-            "finish": 1480401005615,
+            "finish": 1480672730589,
             "project": ":app",
             "name": "prepareComAndroidSupportSupportV42421Library"
         },
         {
-            "start": 1480401005615,
+            "start": 1480672730589,
             "type": "PrepareLibraryTask",
             "report": false,
-            "finish": 1480401005617,
+            "finish": 1480672730591,
             "project": ":app",
             "name": "prepareComAndroidSupportSupportVectorDrawable2421Library"
         },
         {
-            "start": 1480401005617,
+            "start": 1480672730591,
             "type": "PrepareLibraryTask",
             "report": false,
-            "finish": 1480401005634,
+            "finish": 1480672730592,
             "project": ":app",
             "name": "prepareComYouthBannerBanner144Library"
         },
         {
-            "start": 1480401005634,
+            "start": 1480672730592,
+            "type": "PrepareLibraryTask",
+            "report": false,
+            "finish": 1480672730593,
+            "project": ":app",
+            "name": "prepareMeYokeywordFragmentation082Library"
+        },
+        {
+            "start": 1480672730593,
+            "type": "PrepareLibraryTask",
+            "report": false,
+            "finish": 1480672730599,
+            "project": ":app",
+            "name": "prepareMeYokeywordFragmentationSwipeback079Library"
+        },
+        {
+            "start": 1480672730599,
             "type": "PrepareDependenciesTask",
             "report": false,
-            "finish": 1480401005635,
+            "finish": 1480672730599,
             "project": ":app",
             "name": "prepareDebugDependencies"
         },
         {
-            "start": 1480401005635,
+            "start": 1480672730599,
             "type": "AidlCompile",
             "report": false,
-            "finish": 1480401005710,
+            "finish": 1480672730603,
             "project": ":app",
             "name": "compileDebugAidl"
         },
         {
-            "start": 1480401005710,
+            "start": 1480672730604,
             "type": "RenderscriptCompile",
             "report": false,
-            "finish": 1480401005742,
+            "finish": 1480672730629,
             "project": ":app",
             "name": "compileDebugRenderscript"
         },
         {
-            "start": 1480401005742,
+            "start": 1480672730630,
             "type": "GenerateBuildConfig",
             "report": false,
-            "finish": 1480401005786,
+            "finish": 1480672730693,
             "project": ":app",
             "name": "generateDebugBuildConfig"
         },
         {
-            "start": 1480401005786,
+            "start": 1480672730700,
             "type": "GenerateResValues",
             "report": false,
-            "finish": 1480401005834,
+            "finish": 1480672730706,
             "project": ":app",
             "name": "generateDebugResValues"
         },
         {
-            "start": 1480401005834,
+            "start": 1480672730706,
             "type": "DefaultTask",
             "report": false,
-            "finish": 1480401005835,
+            "finish": 1480672730707,
             "project": ":app",
             "name": "generateDebugResources"
         },
         {
-            "start": 1480401005835,
+            "start": 1480672730707,
             "type": "MergeResources",
             "report": true,
-            "finish": 1480401006180,
+            "finish": 1480672731733,
             "project": ":app",
             "name": "mergeDebugResources"
         },
         {
-            "start": 1480401006181,
+            "start": 1480672731733,
             "type": "MergeManifests",
             "report": false,
-            "finish": 1480401006227,
+            "finish": 1480672731744,
             "project": ":app",
             "name": "processDebugManifest"
         },
         {
-            "start": 1480401006227,
+            "start": 1480672731744,
             "type": "ProcessAndroidResources",
             "report": true,
-            "finish": 1480401006336,
+            "finish": 1480672737631,
             "project": ":app",
             "name": "processDebugResources"
         },
         {
-            "start": 1480401006338,
+            "start": 1480672737631,
             "type": "DefaultTask",
             "report": false,
-            "finish": 1480401006340,
+            "finish": 1480672737632,
             "project": ":app",
             "name": "generateDebugSources"
         },
         {
-            "start": 1480401006340,
+            "start": 1480672737632,
             "type": "DefaultTask",
             "report": false,
-            "finish": 1480401006353,
+            "finish": 1480672737688,
             "project": ":app",
             "name": "jrIncrementalizeCompileDebugJavaWithJavac"
         },
         {
-            "start": 1480401006354,
+            "start": 1480672737688,
             "type": "IncrementalSafeguard",
             "report": false,
-            "finish": 1480401006354,
+            "finish": 1480672737689,
             "project": ":app",
             "name": "incrementalDebugJavaCompilationSafeguard"
         },
         {
-            "start": 1480401006355,
+            "start": 1480672737694,
             "type": "AndroidJavaCompile",
             "report": true,
-            "finish": 1480401007197,
+            "finish": 1480672737798,
             "project": ":app",
             "name": "compileDebugJavaWithJavac"
         },
         {
-            "start": 1480401007200,
+            "start": 1480672737803,
             "type": "NdkCompile",
             "report": false,
-            "finish": 1480401007201,
+            "finish": 1480672737807,
             "project": ":app",
             "name": "compileDebugNdk"
         },
         {
-            "start": 1480401007201,
+            "start": 1480672737807,
             "type": "DefaultTask",
             "report": false,
-            "finish": 1480401007202,
+            "finish": 1480672737807,
             "project": ":app",
             "name": "compileDebugSources"
         },
         {
-            "start": 1480401007205,
+            "start": 1480672737808,
             "type": "TransformTask",
             "report": false,
-            "finish": 1480401007241,
+            "finish": 1480672737826,
             "project": ":app",
             "name": "transformClassesWithJrebelNopForDebug"
         },
         {
-            "start": 1480401007241,
+            "start": 1480672737826,
             "type": "GenerateLayoutTask",
             "report": false,
-            "finish": 1480401007300,
+            "finish": 1480672738022,
             "project": ":app",
             "name": "generateDebugJrebelLayout"
         },
         {
-            "start": 1480401007300,
+            "start": 1480672738022,
             "type": "MergeSourceSetFolders",
             "report": false,
-            "finish": 1480401007303,
+            "finish": 1480672738027,
             "project": ":app",
             "name": "mergeDebugShaders"
         },
         {
-            "start": 1480401007305,
+            "start": 1480672738028,
             "type": "ShaderCompile",
             "report": false,
-            "finish": 1480401007323,
+            "finish": 1480672738046,
             "project": ":app",
             "name": "compileDebugShaders"
         },
         {
-            "start": 1480401007323,
+            "start": 1480672738047,
             "type": "DefaultTask",
             "report": false,
-            "finish": 1480401007324,
+            "finish": 1480672738054,
             "project": ":app",
             "name": "generateDebugAssets"
         },
         {
-            "start": 1480401007324,
+            "start": 1480672738055,
             "type": "MergeSourceSetFolders",
             "report": false,
-            "finish": 1480401007340,
+            "finish": 1480672738192,
             "project": ":app",
             "name": "mergeDebugAssets"
         },
         {
-            "start": 1480401007340,
-            "type": "TransformTask",
-            "report": false,
-            "finish": 1480401007340,
-            "project": ":app",
-            "name": "transformClassesWithDexForDebug"
-        },
-        {
-            "start": 1480401007341,
-            "type": "MergeSourceSetFolders",
-            "report": false,
-            "finish": 1480401007352,
-            "project": ":app",
-            "name": "mergeDebugJniLibFolders"
-        },
-        {
-            "start": 1480401007354,
-            "type": "TransformTask",
-            "report": false,
-            "finish": 1480401007366,
-            "project": ":app",
-            "name": "transformNative_libsWithMergeJniLibsForDebug"
-        },
-        {
-            "start": 1480401007367,
-            "type": "Sync",
-            "report": false,
-            "finish": 1480401007368,
-            "project": ":app",
-            "name": "processDebugJavaRes"
-        },
-        {
-            "start": 1480401007369,
-            "type": "TransformTask",
-            "report": false,
-            "finish": 1480401007390,
-            "project": ":app",
-            "name": "transformResourcesWithMergeJavaResForDebug"
-        },
-        {
-            "start": 1480401007390,
-            "type": "ValidateSigningTask",
-            "report": false,
-            "finish": 1480401007390,
-            "project": ":app",
-            "name": "validateSigningDebug"
-        },
-        {
-            "start": 1480401007391,
-            "type": "PackageApplication",
-            "report": false,
-            "finish": 1480401007524,
-            "project": ":app",
-            "name": "packageDebug"
-        },
-        {
-            "start": 1480401007524,
+            "start": 1480672738193,
             "type": "DefaultTask",
             "report": false,
-            "finish": 1480401007525,
-            "project": ":app",
-            "name": "assembleDebug"
-        },
-        {
-            "start": 1480401007525,
-            "type": "DefaultTask",
-            "report": false,
-            "finish": 1480401007526,
+            "finish": 1480672738193,
             "project": ":app",
             "name": "jrebelCompileDebug"
         },
         {
-            "start": 1480401007527,
-            "type": "DefaultTask",
-            "report": false,
-            "finish": 1480401007527,
-            "project": ":app",
-            "name": "jrebelPrepareDebug"
-        },
-        {
-            "start": 1480400999829,
+            "start": 1480672692053,
             "type": "Total",
             "report": true,
-            "finish": 1480401007530,
+            "finish": 1480672738196,
             "project": null,
             "name": null
         }

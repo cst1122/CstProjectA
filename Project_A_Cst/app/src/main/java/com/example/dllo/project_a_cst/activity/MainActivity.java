@@ -6,8 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.graphics.Color;
+import android.os.Bundle;
 import android.os.IBinder;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -17,28 +18,31 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.dllo.project_a_cst.R;
-import com.example.dllo.project_a_cst.adapter.DrawerRecyclerAdapter;
-import com.example.dllo.project_a_cst.adapter.MainTabAdapter;
+import com.example.dllo.project_a_cst.adapter.DrawerMainAdapter;
 import com.example.dllo.project_a_cst.bean.MusicBean;
 import com.example.dllo.project_a_cst.else_class.MediaplayerListPop;
-import com.example.dllo.project_a_cst.main_activity_fragment.BearingFragment;
-import com.example.dllo.project_a_cst.main_activity_fragment.LiveFragment;
-import com.example.dllo.project_a_cst.main_activity_fragment.MineFragment;
-import com.example.dllo.project_a_cst.main_activity_fragment.MusicFragment;
+import com.example.dllo.project_a_cst.main_activity_fragment.MainFragment;
+import com.example.dllo.project_a_cst.main_activity_fragment.MyMusicLIstFragment;
 import com.example.dllo.project_a_cst.my_class.MyMusicPlayClass;
 import com.example.dllo.project_a_cst.service.MusicService;
 
 import java.util.ArrayList;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+import me.yokeyword.fragmentation.SupportActivity;
+import me.yokeyword.fragmentation.anim.FragmentAnimator;
+
+import static com.example.dllo.project_a_cst.my_class.MyConstants.MY_MUSIC_LIST_LEFT;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.MY_MUSIC_LIST_RIGHT;
+
+public class MainActivity extends SupportActivity implements View.OnClickListener {
     private DrawerLayout mineDrawerLayout;
     private ImageButton btnMore, btnSearch;
     private ArrayList<Fragment> data;
@@ -47,7 +51,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private RecyclerView recyclerView;
     private ImageView ivPlayMusic, ivPlayNext, ivMusicMenu;
     private LinearLayoutManager manager
-            = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+            = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
     private ProgressBar progressBar;
     private ServiceConnection connection;
     private Intent mIntent;
@@ -58,44 +62,46 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private LinearLayout linearLayoutDown;
     private MyMusicPlayClass myMusicPlayClass;
     private MediaplayerListPop pop;
+    private MySongListBR mMySongListBR;
 
     @Override
-    int setlaouyt() {
-        return R.layout.activity_main;
-    }
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
-    @Override
-    void initView() {
-        mineDrawerLayout = bindView(R.id.dl_mine);
-        btnMore = bindView(R.id.btn_more);
-        viewPager = bindView(R.id.viewpager_main_activity);
-        tabLayout = bindView(R.id.tablayout_main_activity);
-        recyclerView = bindView(R.id.main_drawerlayout_recyvlerview);
-        btnSearch = bindView(R.id.btn_search);
-        ivPlayMusic = bindView(R.id.iv_main_play);
-        ivPlayNext = bindView(R.id.iv_main_play_next);
-        ivMusicMenu = bindView(R.id.iv_main_music_menu);
-        tvSongName = bindView(R.id.tv_main_song_name);
-        tvSinger = bindView(R.id.tv_main_singer);
-        progressBar = bindView(R.id.progressbar_main);
-        linearLayoutDown = bindView(R.id.linearlayout_main_down);
+        setContentView(R.layout.activity_main);
+        if (savedInstanceState == null){
+            loadRootFragment(R.id.rl_fragment,new MainFragment());
+        }
+        this.setFragmentAnimator(new FragmentAnimator(R.anim.h_fragment_enter,R.anim.h_fragment_exit,R.anim.h_fragment_pop_enter,R.anim.h_fragment_pop_exit));
 
-    }
 
-    @Override
-    void initData() {
+        mineDrawerLayout = (DrawerLayout) findViewById(R.id.dl_mine);
+//        btnMore = (ImageButton) findViewById(R.id.btn_more);
+//        viewPager = (ViewPager) findViewById(R.id.viewpager_main_activity);
+//        tabLayout = (TabLayout) findViewById(R.id.tablayout_main_activity);
+        recyclerView = (RecyclerView) findViewById(R.id.main_drawerlayout_recyvlerview);
+//        btnSearch = (ImageButton) findViewById(R.id.btn_search);
+        ivPlayMusic = (ImageView) findViewById(R.id.iv_main_play);
+        ivPlayNext = (ImageView) findViewById(R.id.iv_main_play_next);
+        ivMusicMenu = (ImageView) findViewById(R.id.iv_main_music_menu);
+        tvSongName = (TextView) findViewById(R.id.tv_main_song_name);
+        tvSinger = (TextView) findViewById(R.id.tv_main_singer);
+        progressBar = (ProgressBar) findViewById(R.id.progressbar_main);
+        linearLayoutDown = (LinearLayout) findViewById(R.id.linearlayout_main_down);
 
-        data = new ArrayList<>();
-        data.add(new MineFragment());
-        data.add(new MusicFragment());
-        data.add(new BearingFragment());
-        data.add(new LiveFragment());
-        MainTabAdapter adapter = new MainTabAdapter(getSupportFragmentManager(), data);
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setTabTextColors(Color.rgb(0x99, 0xe1, 0xff), Color.WHITE);
-        btnMore.setOnClickListener(this);
-        btnSearch.setOnClickListener(this);
+
+//        data = new ArrayList<>();
+//        data.add(new MineFragment());
+//        data.add(new MusicFragment());
+//        data.add(new BearingFragment());
+//        data.add(new LiveFragment());
+//        MainTabAdapter adapter = new MainTabAdapter(getSupportFragmentManager(), data);
+//        viewPager.setAdapter(adapter);
+//        tabLayout.setupWithViewPager(viewPager);
+//        tabLayout.setTabTextColors(Color.rgb(0x99, 0xe1, 0xff), Color.WHITE);
+//        btnMore.setOnClickListener(this);
+//        btnSearch.setOnClickListener(this);
         ivPlayMusic.setOnClickListener(this);
         ivPlayNext.setOnClickListener(this);
         ivMusicMenu.setOnClickListener(this);
@@ -147,9 +153,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         intentFilter.addAction("MUSIC_BR");
         registerReceiver(myMusicBR, intentFilter);
         bindService(mIntent, connection, BIND_AUTO_CREATE);
-        pop = new MediaplayerListPop(this,itemsOnClick);
+//        pop = new MediaplayerListPop(this,itemsOnClick);
+
+        mMySongListBR = new MySongListBR();
+        IntentFilter intentFilter1 = new IntentFilter();
+        intentFilter1.addAction("开启榜单");
+        registerReceiver(mMySongListBR,intentFilter1);
+
 
     }
+
+
+
 
     @Override
     public void onClick(View v) {
@@ -187,20 +202,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             // 播放列表
             case R.id.iv_main_music_menu:
-                pop.showAsDropDown(linearLayoutDown);
+                //pop.showAsDropDown(linearLayoutDown);
                 break;
-            // 更多按钮的抽屉
-            case R.id.btn_more:
-                startDrawer("更多");
-                break;
-            // 搜索按钮的抽屉
-            case R.id.btn_search:
-                startDrawer("搜索");
-                break;
+//            // 更多按钮的抽屉
+//            case R.id.btn_more:
+//                startDrawer("更多");
+//                break;
+//            // 搜索按钮的抽屉
+//            case R.id.btn_search:
+//                startDrawer("搜索");
+//                break;
             // 弹出pop
             case R.id.linearlayout_main_down:
-//                pop = new MediaplayerListPop(this,itemsOnClick);
-//                pop.showAtLocation(this.findViewById(R.id.activity_main),Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL,0,0);
                 Intent intent = new Intent(MainActivity.this,MediaPlayerActivity.class);
                 startActivity(intent);
                 break;
@@ -216,63 +229,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
     // 开启抽屉的方法
     public void startDrawer (String type) {
-        DrawerRecyclerAdapter moreAdapter = new DrawerRecyclerAdapter(context);
-        moreAdapter.setType(type);
+        DrawerMainAdapter moreAdapter = new DrawerMainAdapter(this,type);
         recyclerView.setAdapter(moreAdapter);
         recyclerView.setLayoutManager(manager);
         mineDrawerLayout.setVisibility(View.VISIBLE);
         mineDrawerLayout.openDrawer(Gravity.RIGHT);
     }
 
-    // pop的监听事件
-    private View.OnClickListener itemsOnClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()){
-                case R.id.iv_music_pop_play_mode:
-
-                    break;
-                case R.id.iv_music_pop_previous:
-                    if (myMusicBinder!=null){
-                        Toast.makeText(context, "213", Toast.LENGTH_SHORT).show();
-                        myMusicPlayClass.playLast();
-                    }
-                    break;
-                case R.id.iv_music_pop_next:
-                    if (myMusicBinder!=null){
-                        myMusicPlayClass.playNext();
-                    }
-                    break;
-                case R.id.iv_music_pop_play_pause:
-                    if (myMusicBinder!=null){
-                        if (flag){
-                            myMusicPlayClass.play();
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    while (true){
-                                        progressBar.setProgress(myMusicPlayClass.progress());
-                                    }
-                                }
-                            }).start();
-                            flag = false;
-                        }else {
-                            myMusicPlayClass.pause();
-                        }
-                    }
-                    break;
-                case R.id.iv_music_pop_music_list:
-
-                    break;
-                case R.id.tv_music_pop_first_time:
-
-                    break;
-                case R.id.tv_music_pop_second_time:
-
-                    break;
-            }
-        }
-    };
 
     // 广播接收
     class MyMusicBR extends BroadcastReceiver {
@@ -288,11 +251,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         }
     }
+    class MySongListBR extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String url = MY_MUSIC_LIST_LEFT+intent.getIntExtra("type",1)+MY_MUSIC_LIST_RIGHT;
+            String imageUrl = intent.getStringExtra("图片网址");
+            MyMusicLIstFragment myMusicLIstFragment = new MyMusicLIstFragment();
+            myMusicLIstFragment.setUrl(url);
+            myMusicLIstFragment.setImageUrl(imageUrl);
+            start(myMusicLIstFragment);
+        }
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(myMusicBR);
+        unregisterReceiver(mMySongListBR);
         unbindService(connection);
     }
 }

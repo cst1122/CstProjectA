@@ -26,8 +26,8 @@
 
         <TextView
             android:gravity="center_vertical"
-            android:textSize="16sp"
-            android:text="本地音乐"
+            android:textSize="@dimen/fragment_mine_local_music_text_size"
+            android:text="@string/fragment_mine_local_music"
             android:textColor="@android:color/black"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -35,7 +35,6 @@
 
         <TextView
             android:gravity="center_vertical"
-            android:text="92首"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4" />
@@ -51,11 +50,11 @@
     </LinearLayout>
 
     <TextView
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="50dp"
+        android:layout_marginRight="@dimen/fragment_mine_margin_ringt"
+        android:layout_marginLeft="@dimen/fragment_mine_margin_left"
         android:background="@android:color/darker_gray"
         android:layout_width="match_parent"
-        android:layout_height="1px" />
+        android:layout_height="@dimen/fragment_mine_dividing_line_height" />
 
     <LinearLayout
         android:layout_weight="6"
@@ -74,7 +73,7 @@
         <TextView
             android:gravity="center_vertical"
             android:textSize="16sp"
-            android:text="最近播放"
+            android:text="@string/fragment_mine_recently_played"
             android:textColor="@android:color/black"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -82,7 +81,6 @@
 
         <TextView
             android:gravity="center_vertical"
-            android:text="共1首,   1首离线可播"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4" />
@@ -102,7 +100,7 @@
         android:layout_marginLeft="50dp"
         android:background="@android:color/darker_gray"
         android:layout_width="match_parent"
-        android:layout_height="1px" />
+        android:layout_height="@dimen/fragment_mine_dividing_line_height" />
     <LinearLayout
         android:layout_weight="5"
         android:layout_width="match_parent"
@@ -120,7 +118,7 @@
         <TextView
             android:gravity="center_vertical"
             android:textSize="16sp"
-            android:text="我的下载"
+            android:text="@string/fragment_mine_download"
             android:textColor="@android:color/black"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -128,7 +126,6 @@
 
         <TextView
             android:gravity="center_vertical"
-            android:text="0首"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4" />
@@ -145,7 +142,7 @@
     <TextView
         android:background="@android:color/darker_gray"
         android:layout_width="match_parent"
-        android:layout_height="1px" />
+        android:layout_height="@dimen/fragment_mine_dividing_line_height" />
 
     <LinearLayout
         android:layout_weight="4"
@@ -157,7 +154,7 @@
             android:textColor="@android:color/black"
             android:gravity="center_vertical"
             android:textSize="16sp"
-            android:text="自建歌单"
+            android:text="@string/fragment_mine_self_built_song_list"
             android:layout_weight="5"
             android:layout_width="0dp"
             android:layout_height="match_parent" />
