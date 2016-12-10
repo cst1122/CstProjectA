@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.example.dllo.project_a_cst.R;
 import com.example.dllo.project_a_cst.adapter.SongListAdapter;
@@ -29,7 +28,8 @@ public class SongListFragment extends BaseFragment implements View.OnClickListen
     private String HeatUrl = SONG_LIST_FRAGMENT_HEAT_URL;
     private String NewUrl = SONG_LIST_FRAGMENT_NEW_URL;
     private TextView tvNew,tvHeat;
-    private RequestQueue requestQueue;
+    private int type = 1;
+
 
     @Override
     public int setlayout() {
@@ -49,6 +49,23 @@ public class SongListFragment extends BaseFragment implements View.OnClickListen
         tvNew.setOnClickListener(this);
         tvHeat.setTextColor(getResources().getColor(R.color.mainBlue));
         startVolley(HeatUrl);
+        type = 1;
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+//                switch (type) {
+//                    case 1:
+////                        int i = 2;
+////                        String NewUrl = SONG_LIST_NEW_HEAT_URL_LEFT + i++ + SONG_LIST_NEW_HEAT_URL_RIGHT;
+////                        recyclerView.destroyDrawingCache();
+////                        startVolley(NewUrl);
+//                        break;
+//                    case 2:
+//                        break;
+             //   }
+            }
+        });
     }
 
     @Override
@@ -59,12 +76,14 @@ public class SongListFragment extends BaseFragment implements View.OnClickListen
                 startVolley(HeatUrl);
                 tvHeat.setTextColor(getResources().getColor(R.color.mainBlue));
                 tvNew.setTextColor(getResources().getColor(R.color.mainDark));
+                type = 1;
                 break;
             case R.id.tv_new_song_list_fragment:
                 recyclerView.destroyDrawingCache();
                 startVolley(NewUrl);
                 tvNew.setTextColor(getResources().getColor(R.color.mainBlue));
                 tvHeat.setTextColor(getResources().getColor(R.color.mainDark));
+                type = 2;
                 break;
         }
     }

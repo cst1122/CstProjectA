@@ -173,7 +173,6 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                 twoAdapter.setTYPE(twoType);
                 ((MySecondHolder) holder).rv.setAdapter(twoAdapter);
                 ((MySecondHolder) holder).rv.setLayoutManager(new GridLayoutManager(context, 3));
-                Log.d("RecommendAdapter", "歌单推荐");
                 break;
             // 新碟上架
             case 3:
@@ -185,7 +184,6 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                 threeAdapter.setTYPE(threeType);
                 ((MySecondHolder) holder).rv.setAdapter(threeAdapter);
                 ((MySecondHolder) holder).rv.setLayoutManager(new GridLayoutManager(context, 3));
-                Log.d("RecommendAdapter", "新碟上架");
                 break;
             // 热销专辑
             case 4:
@@ -197,13 +195,11 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                 fourAdapter.setTYPE(fourType);
                 ((MyThirdHolder) holder).rv.setAdapter(fourAdapter);
                 ((MyThirdHolder) holder).rv.setLayoutManager(new GridLayoutManager(context, 3));
-                Log.d("RecommendAdapter", "热销专辑");
                 break;
             // 广告
             case 5:
                 Glide.with(context).load(data.get(0).getResult().getMod_26().getResult().get(0).getPic())
                         .into(((MyFourthHolder) holder).iv);
-                Log.d("RecommendAdapter", "广告");
                 break;
             // 原创音乐
             case 6:
@@ -215,7 +211,6 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                 sixAdapter.setTYPE(sixType);
                 ((MyThirdHolder) holder).rv.setAdapter(sixAdapter);
                 ((MyThirdHolder) holder).rv.setLayoutManager(new GridLayoutManager(context, 3));
-                Log.d("RecommendAdapter", "原创音乐");
                 break;
             // 最热MV推荐
             case 7:
@@ -227,7 +222,6 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                 sevenAdapter.setTYPE(sevenType);
                 ((MyThirdHolder) holder).rv.setAdapter(sevenAdapter);
                 ((MyThirdHolder) holder).rv.setLayoutManager(new GridLayoutManager(context, 3));
-                Log.d("RecommendAdapter", "最热MV推荐");
                 break;
             // 乐播节目
             case 8:
@@ -239,7 +233,6 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                 eightAdapter.setTYPE(eightType);
                 ((MySecondHolder) holder).rv.setAdapter(eightAdapter);
                 ((MySecondHolder) holder).rv.setLayoutManager(new GridLayoutManager(context, 3));
-                Log.d("RecommendAdapter", "乐播节目");
                 break;
             // 专栏
             case 9:
@@ -249,7 +242,6 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                 nineAdapter.setData(data);
                 ((MyFifthHolder) holder).rv.setAdapter(nineAdapter);
                 ((MyFifthHolder) holder).rv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-                Log.d("RecommendAdapter", "专栏");
                 break;
 
         }

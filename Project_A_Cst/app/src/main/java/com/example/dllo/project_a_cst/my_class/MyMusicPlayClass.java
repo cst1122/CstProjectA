@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
@@ -31,6 +32,10 @@ public class MyMusicPlayClass {
     public MyMusicPlayClass(Context context, int position) {
         this.context = context;
         this.position = position;
+    }
+
+    public int getPosition() {
+        return position;
     }
 
     public void setMusicData(ArrayList<MusicBean> musicData) {
@@ -57,9 +62,87 @@ public class MyMusicPlayClass {
         }
     }
 
+    public void playInternetMusic (MusicBean data){
+        if (mediaPlayer.isPlaying()){
+            mediaPlayer.stop();
+            try {
+                mediaPlayer.setDataSource(data.getMusicUrl());
+                mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mediaPlayer.start();
+                    }
+                });
+                serviceIntent.putExtra("key", data);
+                context.sendBroadcast(serviceIntent);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (!mediaPlayer.isPlaying()&&mediaPlayer !=null) {
+            try {
+                mediaPlayer.stop();
+                mediaPlayer.setDataSource(data.getMusicUrl());
+                mediaPlayer.prepareAsync();
+                    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mp) {
+                            mediaPlayer.start();
+                            Log.d("MyMusicPlayClass", "开始播放1");
+                        }
+                    });
+                serviceIntent.putExtra("key", data);
+                context.sendBroadcast(serviceIntent);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (IllegalStateException e) {
+                mediaPlayer = null;
+                mediaPlayer = new MediaPlayer();
+            }
+        }else {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+            try {
+                mediaPlayer = new MediaPlayer();
+                mediaPlayer.setDataSource(data.getMusicUrl());
+                    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mp) {
+                            mediaPlayer.start();
+                            Log.d("MyMusicPlayClass", "开始播放2");
+                        }
+                    });
+                serviceIntent.putExtra("key", data);
+                context.sendBroadcast(serviceIntent);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (IllegalStateException e) {
+                mediaPlayer = null;
+                mediaPlayer = new MediaPlayer();
+            }
+        }
+    }
 
     // 如果没有播放时播放音乐的方法
     public void play() {
+        if (mediaPlayer.isPlaying()){
+            mediaPlayer.stop();
+            try {
+                mediaPlayer.setDataSource(musicData.get(position).getMusicUrl());
+                mediaPlayer.prepareAsync();
+                mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mediaPlayer.start();
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         if (!mediaPlayer.isPlaying()) {
             try {
                 if (mediaPlayer != null) {

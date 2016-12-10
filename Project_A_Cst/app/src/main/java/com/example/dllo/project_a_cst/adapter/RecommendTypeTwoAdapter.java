@@ -1,8 +1,8 @@
 package com.example.dllo.project_a_cst.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,21 +56,26 @@ public class RecommendTypeTwoAdapter extends RecyclerView.Adapter<RecommendTypeT
                 Glide.with(context).load(data.get(0).getResult().getDiy().getResult().get(position).getPic())
                         .into(holder.iv);
                 holder.tv.setText(data.get(0).getResult().getDiy().getResult().get(position).getTitle());
-                Log.d("RecommendTypeTwoAdapter", "歌单推荐");
+
+                holder.iv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent("歌单推荐");
+                        context.sendBroadcast(intent);
+                    }
+                });
                 break;
             // 乐播节目
             case 2:
                 Glide.with(context).load(data.get(0).getResult().getRadio().getResult().get(position).getPic())
                         .into(holder.iv);
                 holder.tv.setText(data.get(0).getResult().getRadio().getResult().get(position).getTitle());
-                Log.d("RecommendTypeTwoAdapter", "乐播节目");
                 break;
             // 原创音乐
             case 3:
                 Glide.with(context).load(data.get(0).getResult().getMix_9().getResult().get(position).getPic())
                         .into(holder.iv);
                 holder.tv.setText(data.get(0).getResult().getMix_9().getResult().get(position).getTitle());
-                Log.d("RecommendTypeTwoAdapter", "原创音乐");
                 break;
         }
     }

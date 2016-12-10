@@ -2,7 +2,6 @@ package com.example.dllo.project_a_cst.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +46,6 @@ public class RecommendTypeFiveAdapter extends RecyclerView.Adapter<RecommendType
                 .into(holder.iv);
         holder.tvOne.setText(data.get(0).getResult().getMod_7().getResult().get(position).getTitle());
         holder.tvTwo.setText(data.get(0).getResult().getMod_7().getResult().get(position).getDesc());
-        Log.d("RecommendTypeFiveAdapte", "专栏");
     }
 
     @Override

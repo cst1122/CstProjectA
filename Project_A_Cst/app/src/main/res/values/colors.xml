@@ -7,4 +7,8 @@
     <color name="white">#ffffff</color>
     <color name="mainDark">#757575</color>
     <color name="main_down_Linearlayout_Background">#c8ffffff</color>
+    <color name="myBlue">#001eff</color>
+    <color name="myGreen">#15ff00</color>
+    <color name="myRed">#ff0007</color>
+    <color name="myYellow">#fbff00</color>
 </resources>

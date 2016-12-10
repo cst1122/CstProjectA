@@ -1,7 +1,9 @@
 package com.example.dllo.project_a_cst.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,8 @@ import com.example.dllo.project_a_cst.bean.MyMusicListBean;
 
 import java.util.ArrayList;
 
+import static com.example.dllo.project_a_cst.my_class.MyConstants.SONG_URL;
+
 /**
  * Created by dllo on 16/12/2.
  */
@@ -22,6 +26,7 @@ import java.util.ArrayList;
 public class MyMusicListAdapter extends RecyclerView.Adapter<MyMusicListAdapter.MyHolder>{
     private ArrayList<MyMusicListBean> data;
     private Context mContext;
+    private ArrayList<String> songUrl = new ArrayList<>();
 
     public MyMusicListAdapter(Context context) {
         mContext = context;
@@ -41,14 +46,48 @@ public class MyMusicListAdapter extends RecyclerView.Adapter<MyMusicListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(MyHolder holder, int position) {
+    public void onBindViewHolder(MyHolder holder, final int position) {
         Glide.with(mContext).load(data.get(0).getSong_list().get(position).getPic_big()).into(holder.iv);
         holder.tvOne.setText(data.get(0).getSong_list().get(position).getTitle());
         holder.tvTwo.setText(data.get(0).getSong_list().get(position).getAuthor());
         holder.ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                for (int i = 0; i < data.get(0).getSong_list().size(); i++) {
+                    String url =  SONG_URL+data.get(0).getSong_list().get(i).getSong_id();
+                    songUrl.add(url);
+                }
+                Log.d("MyMusicListAdapter", data.get(0).getBillboard().getBillboard_type()+"#####");
+                Log.d("MyMusicListAdapter", songUrl.get(0)+"#%!$");
+                Intent intent = new Intent("歌曲地址集合");
+                intent.putStringArrayListExtra("歌曲地址",songUrl);
+                intent.putExtra("第几首歌",position);
+                intent.putExtra("歌单",data.get(0).getBillboard().getBillboard_type());
+                mContext.sendBroadcast(intent);
+//                RequestQueue requestQueue = Volley.newRequestQueue(mContext);
+//                StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                       response =  response.substring(1,response.length()-2);
+//                        songUrl = new ArrayList<>();
+//                        Gson gson = new Gson();
+//                        SongUrlBean bean = gson.fromJson(response,SongUrlBean.class);
+//                        songUrl.add(bean);
+//                        Intent intent = new Intent("歌曲地址");
+//                        intent.putExtra("网址",songUrl.get(0).getBitrate().getFile_link());
+//                        intent.putExtra("歌曲名",songUrl.get(0).getSonginfo().getTitle());
+//                        intent.putExtra("歌手",songUrl.get(0).getSonginfo().getAuthor());
+//                        intent.putExtra("歌曲时间",500000l);
+//                        mContext.sendBroadcast(intent);
+//
+//                    }
+//                }, new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//
+//                    }
+//                });
+//                requestQueue.add(stringRequest);
             }
         });
     }

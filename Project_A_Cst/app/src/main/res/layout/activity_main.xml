@@ -17,6 +17,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
+    </FrameLayout>
         <android.support.v4.widget.DrawerLayout
             android:id="@+id/dl_mine"
             android:layout_width="match_parent"
@@ -42,7 +43,7 @@
             </LinearLayout>
 
         </android.support.v4.widget.DrawerLayout>
-    </FrameLayout>
+
 
     <LinearLayout
         android:id="@+id/linearlayout_main_down"
@@ -60,9 +61,10 @@
             >
 
             <ImageView
+                android:id="@+id/iv_main_music_image"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:src="@mipmap/ic_launcher" />
 
             <LinearLayout

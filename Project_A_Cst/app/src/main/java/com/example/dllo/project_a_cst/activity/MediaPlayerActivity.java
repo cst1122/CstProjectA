@@ -1,11 +1,7 @@
 package com.example.dllo.project_a_cst.activity;
 
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -14,11 +10,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.dllo.project_a_cst.R;
 import com.example.dllo.project_a_cst.adapter.SongFragmentAdapter;
-import com.example.dllo.project_a_cst.bean.MusicBean;
 import com.example.dllo.project_a_cst.main_activity_fragment.SongImageFragment;
 import com.example.dllo.project_a_cst.main_activity_fragment.SongMsgFragment;
 import com.example.dllo.project_a_cst.main_activity_fragment.lyricsFragment;
@@ -37,7 +31,6 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
     private TextView tvFirstTime, tvSecondTime;
     private SeekBar seekBar;
     private ViewPager viewPager;
-    private MusicService.MyMusicBinder myMusicBinder;
     private ServiceConnection connection;
     private MyMusicPlayClass myMusicPlayClass;
     private Intent mIntent;
@@ -76,7 +69,7 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
         fragmentData.add(new SongMsgFragment());
         fragmentData.add(new SongImageFragment());
         fragmentData.add(new lyricsFragment());
-        SongFragmentAdapter adapter = new SongFragmentAdapter(getSupportFragmentManager(),fragmentData);
+        SongFragmentAdapter adapter = new SongFragmentAdapter(getSupportFragmentManager(), fragmentData);
         viewPager.setAdapter(adapter);
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -97,22 +90,6 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
         });
 
         mIntent = new Intent(this, MusicService.class);
-        connection = new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName name, IBinder service) {
-                myMusicBinder = (MusicService.MyMusicBinder) service;
-                myMusicPlayClass = myMusicBinder.getMyMusicPlayClass();
-                if (myMusicBinder!=null){
-                    seekBar.setMax(myMusicPlayClass.max());
-                }
-            }
-
-            @Override
-            public void onServiceDisconnected(ComponentName name) {
-
-            }
-        };
-        bindService(mIntent, connection, BIND_AUTO_CREATE);
     }
 
     @Override
@@ -124,27 +101,13 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
             case R.id.iv_music_pop_play_mode:
             break;
             case R.id.iv_music_pop_previous:
-                if (myMusicBinder!=null){
-                    myMusicPlayClass.playLast();
-                    Toast.makeText(context, "上一曲", Toast.LENGTH_SHORT).show();
-                }
+
             break;
             case R.id.iv_music_pop_next:
-                if (myMusicBinder!=null){
-                    myMusicPlayClass.playNext();
-                    Toast.makeText(context, "下一曲", Toast.LENGTH_SHORT).show();
-                }
+
             break;
             case R.id.iv_music_pop_play_pause:
-                if (myMusicBinder!=null){
-                    if (myMusicPlayClass.musicIsPlay()){
-                        myMusicPlayClass.pause();
-                        Toast.makeText(context, "暂停", Toast.LENGTH_SHORT).show();
-                    }else {
-                        myMusicPlayClass.play();
-                        Toast.makeText(context, "开始", Toast.LENGTH_SHORT).show();
-                    }
-                }
+
             break;
             case R.id.iv_music_pop_music_list:
 
@@ -155,14 +118,7 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
             break;
         }
     }
-    class MyMusicBR extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (myMusicBinder != null) {
-                MusicBean bean = intent.getParcelableExtra("key");
-            }
-        }
-    }
+
 
     @Override
     protected void onDestroy() {

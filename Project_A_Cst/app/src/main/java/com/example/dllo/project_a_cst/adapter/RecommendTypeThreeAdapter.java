@@ -2,7 +2,6 @@ package com.example.dllo.project_a_cst.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +55,6 @@ public class RecommendTypeThreeAdapter extends RecyclerView.Adapter<RecommendTyp
                         .into(holder.iv);
                 holder.tvOne.setText(data.get(0).getResult().getMix_1().getResult().get(position).getTitle());
                 holder.tvTwo.setText(data.get(0).getResult().getMix_1().getResult().get(position).getAuthor());
-                Log.d("RecommendTypeThreeAdapt", "新碟上架");
                 break;
             // 最热MV推荐
             case 2:
@@ -64,7 +62,6 @@ public class RecommendTypeThreeAdapter extends RecyclerView.Adapter<RecommendTyp
                         .into(holder.iv);
                 holder.tvOne.setText(data.get(0).getResult().getMix_5().getResult().get(position).getTitle());
                 holder.tvTwo.setText(data.get(0).getResult().getMix_5().getResult().get(position).getAuthor());
-                Log.d("RecommendTypeThreeAdapt", "最热MV推荐");
                 break;
             // 热销专辑
             case 3:
@@ -72,7 +69,6 @@ public class RecommendTypeThreeAdapter extends RecyclerView.Adapter<RecommendTyp
                         .into(holder.iv);
                 holder.tvOne.setText(data.get(0).getResult().getMix_22().getResult().get(position).getTitle());
                 holder.tvTwo.setText(data.get(0).getResult().getMix_22().getResult().get(position).getAuthor());
-                Log.d("RecommendTypeThreeAdapt", "热销专辑");
                 break;
         }
     }
