@@ -38,4 +38,6 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.android.support:support-v4:24.2.1'
     testCompile 'junit:junit:4.12'
+    compile files('libs/MobTools-2016.1107.1809.jar')
+    compile 'org.jetbrains:annotations-java5:15.0'
 }

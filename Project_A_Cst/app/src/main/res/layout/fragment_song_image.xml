@@ -4,9 +4,35 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <ImageView
-        android:src="@mipmap/ic_launcher"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="500dp">
+        <ImageView
+
+            android:background="#bcbcbc"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+        <ImageView
+            android:id="@+id/iv_fragment_song_image"
+            android:src="@mipmap/ic_launcher"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"/>
+        <TextView
+            android:layout_below="@id/iv_fragment_song_image"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:id="@+id/tv_fragment_song_image_name"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
+        <TextView
+            android:layout_below="@id/tv_fragment_song_image_name"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:id="@+id/tv_fragment_song_image_singer"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
+    </RelativeLayout>
 
 </LinearLayout>

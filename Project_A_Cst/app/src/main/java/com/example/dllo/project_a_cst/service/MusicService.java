@@ -49,7 +49,7 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
     private boolean isFirst = true;
     private boolean Flag = true;
     private ArrayList<String> songUrl;
-    private Map imageMap;
+    private Map imageMap,lrcMap;
     private GetInternetMusicBR mGetInternetMusicBR;
     private String type = "";
 
@@ -279,6 +279,7 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
                 Log.d("music", "&%^&%#^#");
                 musicData = new ArrayList<>();
                 imageMap = new HashMap();
+                lrcMap = new HashMap();
                 songUrl = new ArrayList<>();
                 songUrl = intent.getStringArrayListExtra("歌曲地址");
                 for (int i = 0; i < songUrl.size(); i++) {
@@ -287,6 +288,9 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
             }
             if (musicData.get(mposition).getUrl()!=null){
                 play(mposition);
+                Intent intent1 = new Intent("歌词");
+                intent1.putExtra("歌词网址",lrcMap.get(mposition).toString());
+                sendBroadcast(intent1);
             }
 
         }
@@ -307,6 +311,7 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
                 musicBean.setAlbum("");
                 musicBean.setAlbumId(0);
                 imageMap.put(mposition,bean.getSonginfo().getPic_premium());
+                lrcMap.put(mposition,bean.getSonginfo().getLrclink());
             }
 
             @Override

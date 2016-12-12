@@ -1,18 +1,18 @@
 {
     "timings": [
         {
-            "start": 1481373820528,
+            "start": 1481547216842,
             "type": "Configuration",
             "report": true,
-            "finish": 1481373825532,
+            "finish": 1481547220905,
             "project": null,
             "name": null
         },
         {
-            "start": 1481373820528,
+            "start": 1481547216842,
             "type": "Total",
             "report": true,
-            "finish": 1481373859025,
+            "finish": 1481547253533,
             "project": null,
             "name": null
         }

@@ -64,30 +64,7 @@ public class MyMusicListAdapter extends RecyclerView.Adapter<MyMusicListAdapter.
                 intent.putExtra("第几首歌",position);
                 intent.putExtra("歌单",data.get(0).getBillboard().getBillboard_type());
                 mContext.sendBroadcast(intent);
-//                RequestQueue requestQueue = Volley.newRequestQueue(mContext);
-//                StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                       response =  response.substring(1,response.length()-2);
-//                        songUrl = new ArrayList<>();
-//                        Gson gson = new Gson();
-//                        SongUrlBean bean = gson.fromJson(response,SongUrlBean.class);
-//                        songUrl.add(bean);
-//                        Intent intent = new Intent("歌曲地址");
-//                        intent.putExtra("网址",songUrl.get(0).getBitrate().getFile_link());
-//                        intent.putExtra("歌曲名",songUrl.get(0).getSonginfo().getTitle());
-//                        intent.putExtra("歌手",songUrl.get(0).getSonginfo().getAuthor());
-//                        intent.putExtra("歌曲时间",500000l);
-//                        mContext.sendBroadcast(intent);
 //
-//                    }
-//                }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//
-//                    }
-//                });
-//                requestQueue.add(stringRequest);
             }
         });
     }

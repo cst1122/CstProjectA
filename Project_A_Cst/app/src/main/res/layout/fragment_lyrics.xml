@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+    android:background="@drawable/jb_bg">
 
-    <ImageView
-        android:src="@mipmap/ic_launcher"
+    <com.example.dllo.project_a_cst.my_class.LrcView
+        android:id="@+id/lrc_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

@@ -21,6 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp">
             <ImageView
+                android:id="@+id/iv_music_main_shoucang"
                 android:src="@mipmap/bt_playpage_button_like_normal_new"
                 android:layout_weight="1"
                 android:layout_width="0dp"
@@ -31,6 +32,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent" />
             <ImageView
+                android:id="@+id/iv_music_main_fenxiang"
                 android:src="@mipmap/bt_playpage_button_share_normal_new"
                 android:layout_weight="1"
                 android:layout_width="0dp"

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,6 +25,8 @@ import com.example.dllo.project_a_cst.main_activity_fragment.RecommendMusicFragm
 import com.example.dllo.project_a_cst.my_class.Mp3Info;
 import com.example.dllo.project_a_cst.my_class.MusicUtil;
 import com.example.dllo.project_a_cst.service.MusicService;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
@@ -167,7 +168,14 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
             // 弹出pop
             case R.id.linearlayout_main_down:
                 Intent intent = new Intent(MainActivity.this,MediaPlayerActivity.class);
+                intent.putExtra("歌手",tvSinger.getText().toString());
+                intent.putExtra("歌曲名",tvSongName.getText().toString());
+                intent.putExtra("时长",progressBar.getMax());
+                ivMusicImage.setDrawingCacheEnabled(true);
+                Bitmap bitmap = ivMusicImage.getDrawingCache();
+                intent.putExtra("图片",bitmap);
                 startActivity(intent);
+                ivMusicImage.setDrawingCacheEnabled(false);
                 break;
         }
     }
