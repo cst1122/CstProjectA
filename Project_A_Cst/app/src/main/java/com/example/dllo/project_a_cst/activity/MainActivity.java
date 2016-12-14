@@ -23,12 +23,14 @@ import com.example.dllo.project_a_cst.main_activity_fragment.MainFragment;
 import com.example.dllo.project_a_cst.main_activity_fragment.MyMusicLIstFragment;
 import com.example.dllo.project_a_cst.main_activity_fragment.RecommendMusicFragment;
 import com.example.dllo.project_a_cst.my_class.Mp3Info;
-import com.example.dllo.project_a_cst.my_class.MusicUtil;
+import com.example.dllo.project_a_cst.my_database.DBTool;
+import com.example.dllo.project_a_cst.my_database.MyMusicPerson;
 import com.example.dllo.project_a_cst.service.MusicService;
 
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
@@ -46,21 +48,27 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
     private ProgressBar progressBar;
     private Intent mIntent;
     private TextView tvSongName, tvSinger;
-    private boolean flag = true;
     private LinearLayout linearLayoutDown;
     private MediaplayerListPop pop;
     private MySongListBR mMySongListBR;
     private getMusicInformationBR mGetMusicInformationBR;
     private getMusicProgressBR mGetMusicProgressBR;
+    private getMusicIdBR mGetMusicIdBR;
+    private getMusicLrcBR mGetMusicLrcBR;
     private MyGeDanBr mMyGeDanBr;
     private static ArrayList<Mp3Info> musicData = new ArrayList<>();
     private boolean isPlaying = false;
     private Intent mStartMService;
+    private static String musicId;
+    private static String musicLrc;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState == null){
@@ -97,7 +105,7 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
         });
 
 
-//        pop = new MediaplayerListPop(this,itemsOnClick);
+
 
 
 
@@ -117,10 +125,10 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
     }
 
     private void initData(){
-        musicData = (ArrayList<Mp3Info>) MusicUtil.getMp3Infos(this);
+//        musicData = (ArrayList<Mp3Info>) MusicUtil.getMp3Infos(this);
         mStartMService = new Intent();
         mStartMService.setClass(getApplicationContext(), MusicService.class);
-        mStartMService.putParcelableArrayListExtra("音乐数据",musicData);
+//        mStartMService.putParcelableArrayListExtra("音乐数据",musicData);
         startService(mStartMService);
 
         mMySongListBR = new MySongListBR();
@@ -143,6 +151,23 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
         intentFilter4.addAction("音乐播放进度");
         registerReceiver(mGetMusicProgressBR,intentFilter4);
 
+        mGetMusicIdBR = new getMusicIdBR();
+        IntentFilter intentFilter5 = new IntentFilter();
+        intentFilter5.addAction("歌曲地址集合");
+        registerReceiver(mGetMusicIdBR,intentFilter5);
+
+        mGetMusicLrcBR = new getMusicLrcBR();
+        IntentFilter intentFilter6 = new IntentFilter();
+        intentFilter6.addAction("音乐是否播放");
+        registerReceiver(mGetMusicLrcBR,intentFilter6);
+
+        View.OnClickListener itemsOnClick = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        };
+        pop = new MediaplayerListPop(this,itemsOnClick);
     }
 
 
@@ -163,7 +188,25 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
                 break;
             // 播放列表
             case R.id.iv_main_music_menu:
-               // pop.showAsDropDown(linearLayoutDown);
+                pop.setContext(this);
+                //ArrayList<ListPopBean> data = new ArrayList<>();
+                List<MyMusicPerson> data;
+                data = DBTool.getInstance().queryMusicAll();
+                List<MyMusicPerson> musicData = new ArrayList<>();
+                for (int i = 0; i < data.size(); i++) {
+                    MyMusicPerson bean = new MyMusicPerson();
+                    bean.setTitle(data.get(i).getTitle());
+                    bean.setArtist(data.get(i).getArtist());
+                    if (data.get(i).getId()!=null) {
+                        bean.setMusicId(data.get(i).getId());
+                    }else {
+                        bean.setMusicId(0);
+                    }
+                    bean.setUrl(data.get(i).getUrl());
+                    musicData.add(bean);
+                }
+                pop.setData((ArrayList<MyMusicPerson>) musicData);
+                pop.showAsDropDown(linearLayoutDown);
                 break;
             // 弹出pop
             case R.id.linearlayout_main_down:
@@ -171,6 +214,11 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
                 intent.putExtra("歌手",tvSinger.getText().toString());
                 intent.putExtra("歌曲名",tvSongName.getText().toString());
                 intent.putExtra("时长",progressBar.getMax());
+                intent.putExtra("歌曲id",musicId);
+                if (musicLrc!=null) {
+                    intent.putExtra("歌词", musicLrc);
+                    Log.d("1123", musicLrc);
+                }
                 ivMusicImage.setDrawingCacheEnabled(true);
                 Bitmap bitmap = ivMusicImage.getDrawingCache();
                 intent.putExtra("图片",bitmap);
@@ -222,7 +270,7 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
             }else {
                 Glide.with(MainActivity.this).load(intent.getStringExtra("图片网址")).into(ivMusicImage);
             }
-            Log.d("music", "歌曲长度"+intent.getIntExtra("歌曲长度",0));
+            musicData = intent.getParcelableArrayListExtra("歌曲集合");
         }
     }
     class getMusicProgressBR extends BroadcastReceiver{
@@ -234,6 +282,20 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
             setPlayMusicIv();
         }
     }
+    class getMusicIdBR extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            musicId = intent.getStringExtra("歌曲id");
+        }
+    }
+    class getMusicLrcBR extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            musicLrc = intent.getStringExtra("歌词网址");
+        }
+    }
 
     @Override
     protected void onDestroy() {
@@ -242,6 +304,8 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
         unregisterReceiver(mMyGeDanBr);
         unregisterReceiver(mGetMusicInformationBR);
         unregisterReceiver(mGetMusicProgressBR);
+        unregisterReceiver(mGetMusicIdBR);
+        unregisterReceiver(mGetMusicLrcBR);
         stopService(mStartMService);
     }
 }

@@ -2,6 +2,7 @@ package com.example.dllo.project_a_cst.else_class;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -11,22 +12,35 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.dllo.project_a_cst.R;
+import com.example.dllo.project_a_cst.adapter.ListPopAdapter;
+import com.example.dllo.project_a_cst.my_database.MyMusicPerson;
+
+import java.util.ArrayList;
 
 /**
  * Created by dllo on 16/11/24.
  */
 
 public class MediaplayerListPop extends PopupWindow implements View.OnClickListener {
-//    private ImageButton btnReturn;
-//    private ImageView ivPlayMode, ivPrevious, ivNext, ivPlayPause, ivMusicList;
-//    private TextView tvFirsttime, tvSecondtime;
-//    private SeekBar seekBar;
-//    private ViewPager viewPager;
-//    private View mediaplayerPopView;
+
     private ImageView iv;
     private TextView tvOne,tvTwo;
     private View popView;
     private RecyclerView recyclerView;
+    private ArrayList<MyMusicPerson> data;
+    private Context mContext;
+
+    public void setContext(Context context) {
+        mContext = context;
+    }
+
+    public void setData(ArrayList<MyMusicPerson> data) {
+        this.data = data;
+        ListPopAdapter adapter = new ListPopAdapter(mContext);
+        adapter.setData(data);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+    }
 
     public MediaplayerListPop(Activity context, View.OnClickListener itemsOnClick) {
         super(context);
@@ -41,27 +55,7 @@ public class MediaplayerListPop extends PopupWindow implements View.OnClickListe
         iv.setOnClickListener(this);
         tvTwo.setOnClickListener(this);
         this.setContentView(popView);
-//        btnReturn = (ImageButton) mediaplayerPopView.findViewById(R.id.btn_music_pop_return);
-//        ivPlayMode = (ImageView) mediaplayerPopView.findViewById(R.id.iv_music_pop_play_mode);
-//        ivPrevious = (ImageView) mediaplayerPopView.findViewById(R.id.iv_music_pop_previous);
-//        ivNext = (ImageView) mediaplayerPopView.findViewById(R.id.iv_music_pop_next);
-//        ivPlayPause = (ImageView) mediaplayerPopView.findViewById(R.id.iv_music_pop_play_pause);
-//        ivMusicList = (ImageView) mediaplayerPopView.findViewById(R.id.iv_music_pop_music_list);
-//        tvFirsttime = (TextView) mediaplayerPopView.findViewById(R.id.tv_music_pop_first_time);
-//        tvSecondtime = (TextView) mediaplayerPopView.findViewById(R.id.tv_music_pop_second_time);
-//        seekBar = (SeekBar) mediaplayerPopView.findViewById(R.id.seek_bar_music_pop);
-//        viewPager = (ViewPager) mediaplayerPopView.findViewById(R.id.view_pager_music_pop);
-//
-//        btnReturn.setOnClickListener(this);
-//        ivPlayMode.setOnClickListener(itemsOnClick);
-//        ivPrevious.setOnClickListener(itemsOnClick);
-//        ivNext.setOnClickListener(itemsOnClick);
-//        ivPlayPause.setOnClickListener(itemsOnClick);
-//        ivMusicList.setOnClickListener(itemsOnClick);
-//        tvFirsttime.setOnClickListener(itemsOnClick);
-//        tvSecondtime.setOnClickListener(itemsOnClick);
-//
-//        this.setContentView(mediaplayerPopView);
+
         DisplayMetrics metrics = new DisplayMetrics();
         context.getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int width,height;

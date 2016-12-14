@@ -24,7 +24,7 @@ public class NetHelper {
     }
 
     private NetHelper() {
-        mContext = MyApp.getmContext();
+        mContext = MyApp.getContext();
         mRequestQueue = getRequestQueue();
     }
     private RequestQueue getRequestQueue(){

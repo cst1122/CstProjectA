@@ -3,4 +3,26 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:scaleType="fitXY"
+                android:src="@mipmap/live"
+                android:layout_width="match_parent"
+                android:layout_height="450dp"/>
+            <ImageView
+                android:scaleType="fitXY"
+                android:src="@mipmap/live_two"
+                android:layout_width="match_parent"
+                android:layout_height="450dp"/>
+        </LinearLayout>
+
+    </ScrollView>
+
 </LinearLayout>

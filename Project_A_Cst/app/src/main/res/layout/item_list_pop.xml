@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="80dp"
+                android:id="@+id/Rl_list_pop"
+    >
+
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:text="那些年"
+       android:id="@+id/tv_list_pop_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tv_list_pop_singer"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:text="胡夏"
+        android:layout_below="@id/tv_list_pop_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <ImageView
+        android:id="@+id/iv_list_pop_delete"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/bt_notificationbar_close"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"/>
+    <ImageView
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/darker_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+</RelativeLayout>

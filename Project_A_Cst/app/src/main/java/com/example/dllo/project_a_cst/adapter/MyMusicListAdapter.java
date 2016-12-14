@@ -61,6 +61,7 @@ public class MyMusicListAdapter extends RecyclerView.Adapter<MyMusicListAdapter.
                 Log.d("MyMusicListAdapter", songUrl.get(0)+"#%!$");
                 Intent intent = new Intent("歌曲地址集合");
                 intent.putStringArrayListExtra("歌曲地址",songUrl);
+                intent.putExtra("歌曲id",data.get(0).getSong_list().get(position).getSong_id());
                 intent.putExtra("第几首歌",position);
                 intent.putExtra("歌单",data.get(0).getBillboard().getBillboard_type());
                 mContext.sendBroadcast(intent);

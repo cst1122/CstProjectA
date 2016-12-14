@@ -229,9 +229,9 @@ public class BearingAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        //return data.get(0).getMsg().size() + 1;
+        return data.get(0).getMsg().size() + 1;
 //        return myType.size();
-        return 0;
+        //return 0;
     }
 
     class MyFirstHolder extends RecyclerView.ViewHolder {

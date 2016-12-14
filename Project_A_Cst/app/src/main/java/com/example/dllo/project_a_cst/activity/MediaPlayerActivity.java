@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -19,6 +20,8 @@ import com.example.dllo.project_a_cst.adapter.SongFragmentAdapter;
 import com.example.dllo.project_a_cst.main_activity_fragment.SongImageFragment;
 import com.example.dllo.project_a_cst.main_activity_fragment.SongMsgFragment;
 import com.example.dllo.project_a_cst.main_activity_fragment.lyricsFragment;
+import com.example.dllo.project_a_cst.my_database.DBTool;
+import com.example.dllo.project_a_cst.my_database.MyPerson;
 
 import java.util.ArrayList;
 
@@ -45,6 +48,12 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
     private boolean isPlaying = false;
     private getMusicProgressBR mGetMusicProgressBR;
     private getMusicInformationBR mGetMusicInformationBR;
+    private static String mSinger;
+    private static String mSongName;
+    private Bitmap mBitmap;
+    private static String musicId;
+    private static String musicLrc;
+    private static String musicUrl;
 
     @Override
     int setlaouyt() {
@@ -53,6 +62,8 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     void initView() {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         btnReturn = bindView(R.id.btn_music_pop_return);
         ivShouCang = bindView(R.id.iv_music_main_shoucang);
         ivFenXiang = bindView(R.id.iv_music_main_fenxiang);
@@ -82,22 +93,31 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
         tvSecondTime.setOnClickListener(this);
         fragmentData = new ArrayList<>();
         Intent intent = getIntent();
-        String singer = intent.getStringExtra("歌手");
-        String songName = intent.getStringExtra("歌曲名");
+        mSinger = intent.getStringExtra("歌手");
+        mSongName = intent.getStringExtra("歌曲名");
+        isCollection();
         int max = intent.getIntExtra("时长",0);
-        Bitmap bitmap = intent.getParcelableExtra("图片");
+        mBitmap = intent.getParcelableExtra("图片");
+        musicId = intent.getStringExtra("歌曲id");
+        musicLrc = intent.getStringExtra("歌词");
+        if (musicLrc!=null) {
+            Log.d("1123", musicLrc);
+        }
 
         SongMsgFragment songMsgFragment = new SongMsgFragment();
-        songMsgFragment.setBitmap(bitmap);
-        songMsgFragment.setSinger(singer);
-        songMsgFragment.setName(songName);
+        songMsgFragment.setBitmap(mBitmap);
+        songMsgFragment.setSinger(mSinger);
+        songMsgFragment.setName(mSongName);
         seekBar.setMax(max);
         SongImageFragment songImageFragment = new SongImageFragment();
-        songImageFragment.setName(songName);
-        songImageFragment.setSinger(singer);
-        songImageFragment.setBitmap(bitmap);
+        songImageFragment.setName(mSongName);
+        songImageFragment.setSinger(mSinger);
+        songImageFragment.setBitmap(mBitmap);
 
         lyricsFragment mLyricsFragment = new lyricsFragment();
+        if (musicLrc!=null){
+            mLyricsFragment.setLrcUrl(musicLrc);
+        }
 
         fragmentData.add(songMsgFragment);
         fragmentData.add(songImageFragment);
@@ -174,10 +194,32 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
             case R.id.tv_music_pop_second_time:
                 break;
             case R.id.iv_music_main_shoucang:
+                SaveMusic();
+                isCollection();
                 break;
             case R.id.iv_music_main_fenxiang:
-
+                showShare();
                 break;
+        }
+    }
+    private void SaveMusic(){
+        MyPerson person = new MyPerson();
+        person.setSinger(mSinger);
+        person.setMusicName(mSongName);
+        person.setMusicUrl(musicUrl);
+        person.setMusicId(musicId);
+        if (!(DBTool.getInstance().isSave(mSongName))){
+            DBTool.getInstance().insertPerson(person);
+        }else {
+            DBTool.getInstance().deleteByName(mSongName);
+        }
+    }
+
+    private void isCollection (){
+        if (DBTool.getInstance().isSave(mSongName)){
+            ivShouCang.setImageResource(R.mipmap.bt_playpage_button_like_hl_new);
+        }else {
+            ivShouCang.setImageResource(R.mipmap.bt_playpage_button_like_normal_new);
         }
     }
 
@@ -185,6 +227,10 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
         @Override
         public void onReceive(Context context, Intent intent) {
             seekBar.setMax(intent.getIntExtra("歌曲长度",0));
+            mSongName = intent.getStringExtra("歌曲名");
+            isCollection();
+            mSinger = intent.getStringExtra("歌手");
+            musicUrl = intent.getStringExtra("歌词Url");
         }
     }
 
@@ -197,6 +243,13 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
             setPlayMusicIv();
         }
     }
+    class getMusicIdBR extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            musicId = intent.getStringExtra("歌曲id");
+        }
+    }
 
 
 
@@ -205,11 +258,11 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
         oks.disableSSOWhenAuthorize();
 
   // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间等使用
-        oks.setTitle("标题");
+        oks.setTitle(mSongName);
   // titleUrl是标题的网络链接，QQ和QQ空间等使用
-        oks.setTitleUrl("http://sharesdk.cn");
+        oks.setTitleUrl("http://music.baidu.com/song/"+musicId+"?share=1&fr=app_android");
   // text是分享文本，所有平台都需要这个字段
-        oks.setText("我是分享文本");
+        oks.setText(mSinger);
   // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
   //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
   // url仅在微信（包括好友和朋友圈）中使用
@@ -219,7 +272,7 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
   // site是分享此内容的网站名称，仅在QQ空间使用
         oks.setSite(getString(R.string.app_name));
   // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-        oks.setSiteUrl("http://sharesdk.cn");
+        oks.setSiteUrl("http://music.baidu.com/song/"+musicId+"?share=1&fr=app_android");
   // 启动分享GUI
         oks.show(this);
     }
