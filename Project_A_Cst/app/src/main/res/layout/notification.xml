@@ -18,33 +18,33 @@
 
         <TextView
             android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:textSize="@dimen/two_zero_sp"
+            android:layout_marginLeft="@dimen/ten_dp"
+            android:layout_marginTop="@dimen/ten_dp"
             android:gravity="center"
             android:id="@+id/tv_noti_song_name"
-            android:text="缘分一道桥"
+
             android:layout_width="wrap_content"
-            android:layout_height="30dp"/>
+            android:layout_height="@dimen/three_zero_dp"/>
         <TextView
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/ten_dp"
             android:layout_below="@+id/tv_noti_song_name"
             android:id="@+id/tv_noti_singer"
-            android:text="王力宏,谭维维"
+
             android:layout_width="wrap_content"
-            android:layout_height="30dp"/>
+            android:layout_height="@dimen/three_zero_dp"/>
         <ImageView
             android:id="@+id/iv_noti_finish"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginRight="@dimen/ten_dp"
+            android:layout_marginTop="@dimen/ten_dp"
             android:src="@mipmap/bt_notificationbar_close"
             android:layout_alignParentRight="true"
-            android:layout_width="20dp"
-            android:layout_height="20dp"/>
+            android:layout_width="@dimen/two_zero_dp"
+            android:layout_height="@dimen/two_zero_dp"/>
 
         <ImageView
             android:id="@+id/iv_noti_play"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="@dimen/five_dp"
             android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
             android:src="@mipmap/bt_notificationbar_play"
@@ -52,8 +52,8 @@
             android:layout_height="wrap_content"/>
         <ImageView
             android:id="@+id/iv_noti_last"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginRight="@dimen/two_zero_dp"
+            android:layout_marginBottom="@dimen/ten_dp"
             android:layout_alignParentBottom="true"
             android:layout_toLeftOf="@id/iv_noti_play"
             android:src="@mipmap/bt_notificationbar_prev"
@@ -61,8 +61,8 @@
             android:layout_height="wrap_content"/>
         <ImageView
             android:id="@+id/iv_noti_next"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="@dimen/two_zero_dp"
+            android:layout_marginBottom="@dimen/ten_dp"
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@id/iv_noti_play"
             android:src="@mipmap/bt_notificationbar_next"

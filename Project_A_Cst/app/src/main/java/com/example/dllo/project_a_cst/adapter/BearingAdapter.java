@@ -20,7 +20,8 @@ import java.util.ArrayList;
 
 import static com.example.dllo.project_a_cst.my_class.MyConstants.BEARING_ADAPTER_TYPE_TWO;
 
-/** 动态界面的适配器  接口有问题
+/**
+ * 动态界面的适配器  接口有问题
  * Created by dllo on 16/11/28.
  */
 
@@ -53,7 +54,7 @@ public class BearingAdapter extends RecyclerView.Adapter {
                     || data.get(0).getMsg().get(position - 1).getContent().getContent_type() == 3
                     || data.get(0).getMsg().get(position - 1).getContent().getContent_type() == 2) {
                 myType = 4;
-            }else {
+            } else {
                 myType = 5;
             }
         } else {

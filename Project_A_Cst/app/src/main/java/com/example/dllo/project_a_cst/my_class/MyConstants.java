@@ -46,4 +46,11 @@ public class MyConstants {
     public static final String MUSIC_PLAY_DANQU = "com.example.dllo.project_a_cst.music_play_danqu";
     public static final String MUSIC_PLAY_XUNHUAN = "com.example.dllo.project_a_cst.music_play_xunhuan";
     public static final String MUSIC_PLAY_SUIJI = "com.example.dllo.project_a_cst.music_play_suiji";
+    public static final String SINGER = "歌手";
+    public static final String MUSIC_NAME = "歌曲名";
+    public static final String MUSIC_TIME = "时长";
+    public static final String PICTURE = "图片";
+    public static final String MUSIC_ID = "歌曲id";
+    public static final String MUSIC_LRC = "歌词";
+    public static final String MUSIC_PROGRESS = "进度";
 }

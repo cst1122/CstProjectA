@@ -36,7 +36,6 @@
 
         <TextView
             android:id="@+id/tv_bendi"
-            android:text="5首"
             android:gravity="center_vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -190,7 +189,7 @@
             android:layout_height="match_parent">
             <TextView
                 android:layout_marginTop="7dp"
-                android:text="我喜欢的单曲"
+                android:text="@string/my_like_music"
                 android:textColor="@android:color/black"
                 android:gravity="center_vertical"
                 android:layout_weight="1"
@@ -226,7 +225,7 @@
             android:textColor="@android:color/black"
             android:gravity="center_vertical"
             android:textSize="16sp"
-            android:text="我的收藏"
+            android:text="@string/my_shou_cang"
             android:layout_weight="5"
             android:layout_width="0dp"
             android:layout_height="match_parent" />
@@ -236,7 +235,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent">
             <TextView
-                android:text="歌单"
+                android:text="@string/music_list"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:layout_width="0dp"
@@ -248,19 +247,19 @@
                 android:layout_width="1px"
                 android:layout_height="match_parent" />
             <TextView
-                android:text="专辑"
+                android:text="@string/albumn"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent" />
             <TextView
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginTop="@dimen/fragment_mine_margin_top"
+                android:layout_marginBottom="@dimen/fragment_mine_margin_top"
                 android:background="@android:color/darker_gray"
                 android:layout_width="1px"
                 android:layout_height="match_parent" />
             <TextView
-                android:text="歌手"
+                android:text="@string/singer"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:layout_width="0dp"
@@ -277,7 +276,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:text="登录"
+            android:text="@string/login"
             android:gravity="center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

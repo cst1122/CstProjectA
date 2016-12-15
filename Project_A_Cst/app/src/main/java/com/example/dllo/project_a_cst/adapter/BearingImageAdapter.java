@@ -13,7 +13,8 @@ import com.example.dllo.project_a_cst.bean.BearingBean;
 
 import java.util.ArrayList;
 
-/** 动态界面中用来加载图片的适配器  moreType 代表图片数量
+/**
+ * 动态界面中用来加载图片的适配器  moreType 代表图片数量
  * Created by dllo on 16/11/28.
  */
 
@@ -69,33 +70,33 @@ public class BearingImageAdapter extends RecyclerView.Adapter {
                 Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(1).getPic_360()).into(((MyFirstHolder) holder).ivSecond);
                 Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(2).getPic_360()).into(((MyFirstHolder) holder).ivThird);
             } else if (moreType == 2) {
-                Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(0).getPic_360()).into(((MyThirdHolder)holder).ivOne);
-                Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(1).getPic_360()).into(((MyThirdHolder)holder).ivTwo);
+                Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(0).getPic_360()).into(((MyThirdHolder) holder).ivOne);
+                Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(1).getPic_360()).into(((MyThirdHolder) holder).ivTwo);
             } else {
-                switch (moreType){
+                switch (moreType) {
                     case 1:
-                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(0).getPic_360()).into(((MySecondHolder)holder).ivOnly);
+                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(0).getPic_360()).into(((MySecondHolder) holder).ivOnly);
                         break;
                     case 4:
-                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(0).getPic_360()).into(((MySecondHolder)holder).ivOne);
-                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(1).getPic_360()).into(((MySecondHolder)holder).ivTwo);
-                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(2).getPic_360()).into(((MySecondHolder)holder).ivFour);
-                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(3).getPic_360()).into(((MySecondHolder)holder).ivFive);
+                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(0).getPic_360()).into(((MySecondHolder) holder).ivOne);
+                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(1).getPic_360()).into(((MySecondHolder) holder).ivTwo);
+                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(2).getPic_360()).into(((MySecondHolder) holder).ivFour);
+                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(3).getPic_360()).into(((MySecondHolder) holder).ivFive);
                         break;
                     case 5:
-                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(0).getPic_360()).into(((MySecondHolder)holder).ivOne);
-                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(1).getPic_360()).into(((MySecondHolder)holder).ivTwo);
-                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(2).getPic_360()).into(((MySecondHolder)holder).ivThree);
-                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(3).getPic_360()).into(((MySecondHolder)holder).ivFour);
-                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(4).getPic_360()).into(((MySecondHolder)holder).ivFive);
+                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(0).getPic_360()).into(((MySecondHolder) holder).ivOne);
+                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(1).getPic_360()).into(((MySecondHolder) holder).ivTwo);
+                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(2).getPic_360()).into(((MySecondHolder) holder).ivThree);
+                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(3).getPic_360()).into(((MySecondHolder) holder).ivFour);
+                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(4).getPic_360()).into(((MySecondHolder) holder).ivFive);
                         break;
                     case 6:
-                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(0).getPic_360()).into(((MySecondHolder)holder).ivOne);
-                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(1).getPic_360()).into(((MySecondHolder)holder).ivTwo);
-                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(2).getPic_360()).into(((MySecondHolder)holder).ivThree);
-                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(3).getPic_360()).into(((MySecondHolder)holder).ivFour);
-                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(4).getPic_360()).into(((MySecondHolder)holder).ivFive);
-                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(5).getPic_360()).into(((MySecondHolder)holder).ivSix);
+                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(0).getPic_360()).into(((MySecondHolder) holder).ivOne);
+                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(1).getPic_360()).into(((MySecondHolder) holder).ivTwo);
+                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(2).getPic_360()).into(((MySecondHolder) holder).ivThree);
+                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(3).getPic_360()).into(((MySecondHolder) holder).ivFour);
+                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(4).getPic_360()).into(((MySecondHolder) holder).ivFive);
+                        Glide.with(context).load(data.get(0).getMsg().get(pos).getPiclist().get(5).getPic_360()).into(((MySecondHolder) holder).ivSix);
                         break;
                 }
             }
@@ -119,7 +120,7 @@ public class BearingImageAdapter extends RecyclerView.Adapter {
     }
 
     class MySecondHolder extends RecyclerView.ViewHolder {
-        private ImageView ivOne, ivTwo, ivThree, ivFour, ivFive, ivSix,ivOnly;
+        private ImageView ivOne, ivTwo, ivThree, ivFour, ivFive, ivSix, ivOnly;
 
         public MySecondHolder(View itemView) {
             super(itemView);

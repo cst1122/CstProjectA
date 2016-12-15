@@ -20,6 +20,7 @@ import com.example.dllo.project_a_cst.adapter.SongFragmentAdapter;
 import com.example.dllo.project_a_cst.main_activity_fragment.SongImageFragment;
 import com.example.dllo.project_a_cst.main_activity_fragment.SongMsgFragment;
 import com.example.dllo.project_a_cst.main_activity_fragment.lyricsFragment;
+import com.example.dllo.project_a_cst.my_class.MusicUtil;
 import com.example.dllo.project_a_cst.my_database.DBTool;
 import com.example.dllo.project_a_cst.my_database.MyPerson;
 
@@ -28,10 +29,17 @@ import java.util.ArrayList;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 
+import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_ID;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_LRC;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_NAME;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PAUSE;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PLAY;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PLAY_LAST;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PLAY_NEXT;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PROGRESS;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_TIME;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.PICTURE;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.SINGER;
 
 /**
  * Created by dllo on 16/11/26.
@@ -93,16 +101,13 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
         tvSecondTime.setOnClickListener(this);
         fragmentData = new ArrayList<>();
         Intent intent = getIntent();
-        mSinger = intent.getStringExtra("歌手");
-        mSongName = intent.getStringExtra("歌曲名");
-        isCollection();
-        int max = intent.getIntExtra("时长",0);
-        mBitmap = intent.getParcelableExtra("图片");
-        musicId = intent.getStringExtra("歌曲id");
-        musicLrc = intent.getStringExtra("歌词");
-        if (musicLrc!=null) {
-            Log.d("1123", musicLrc);
-        }
+        mSinger = intent.getStringExtra(SINGER);
+        mSongName = intent.getStringExtra(MUSIC_NAME);
+        setIv();
+        int max = intent.getIntExtra(MUSIC_TIME, 0);
+        mBitmap = intent.getParcelableExtra(PICTURE);
+        musicId = intent.getStringExtra(MUSIC_ID);
+        musicLrc = intent.getStringExtra(MUSIC_LRC);
 
         SongMsgFragment songMsgFragment = new SongMsgFragment();
         songMsgFragment.setBitmap(mBitmap);
@@ -115,7 +120,7 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
         songImageFragment.setBitmap(mBitmap);
 
         lyricsFragment mLyricsFragment = new lyricsFragment();
-        if (musicLrc!=null){
+        if (musicLrc != null) {
             mLyricsFragment.setLrcUrl(musicLrc);
         }
 
@@ -130,7 +135,9 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+                Intent intent1 = new Intent("拖拽");
+                intent1.putExtra(MUSIC_PROGRESS,progress);
+                sendBroadcast(intent1);
             }
 
             @Override
@@ -146,18 +153,18 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
         mGetMusicProgressBR = new getMusicProgressBR();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("音乐播放进度");
-        registerReceiver(mGetMusicProgressBR,intentFilter);
+        registerReceiver(mGetMusicProgressBR, intentFilter);
 
         mGetMusicInformationBR = new getMusicInformationBR();
         IntentFilter intentFilter1 = new IntentFilter();
         intentFilter1.addAction("歌曲信息");
-        registerReceiver(mGetMusicInformationBR,intentFilter1);
+        registerReceiver(mGetMusicInformationBR, intentFilter1);
     }
 
-    public void setPlayMusicIv(){
-        if (isPlaying){
+    public void setPlayMusicIv() {
+        if (isPlaying) {
             ivPlayPause.setImageResource(R.mipmap.bt_playpage_button_pause_normal_new);
-        }else {
+        } else {
             ivPlayPause.setImageResource(R.mipmap.bt_playpage_button_play_normal_new);
         }
     }
@@ -181,7 +188,7 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
             case R.id.iv_music_pop_play_pause:
                 if (!isPlaying) {
                     mIntent = new Intent(MUSIC_PLAY);
-                }else {
+                } else {
                     mIntent = new Intent(MUSIC_PAUSE);
                 }
                 sendBroadcast(mIntent);
@@ -195,41 +202,43 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.iv_music_main_shoucang:
                 SaveMusic();
-                isCollection();
+                setIv();
                 break;
             case R.id.iv_music_main_fenxiang:
                 showShare();
                 break;
         }
     }
-    private void SaveMusic(){
+
+    private void SaveMusic() {
         MyPerson person = new MyPerson();
         person.setSinger(mSinger);
         person.setMusicName(mSongName);
         person.setMusicUrl(musicUrl);
         person.setMusicId(musicId);
-        if (!(DBTool.getInstance().isSave(mSongName))){
+        if (!(DBTool.getInstance().isSave(mSongName))) {
             DBTool.getInstance().insertPerson(person);
-        }else {
+        } else {
             DBTool.getInstance().deleteByName(mSongName);
         }
     }
 
-    private void isCollection (){
-        if (DBTool.getInstance().isSave(mSongName)){
+    private void setIv() {
+        if (DBTool.getInstance().isSave(mSongName)) {
             ivShouCang.setImageResource(R.mipmap.bt_playpage_button_like_hl_new);
-        }else {
+        } else {
             ivShouCang.setImageResource(R.mipmap.bt_playpage_button_like_normal_new);
         }
     }
 
-    class getMusicInformationBR extends BroadcastReceiver{
+    class getMusicInformationBR extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            seekBar.setMax(intent.getIntExtra("歌曲长度",0));
+            seekBar.setMax(intent.getIntExtra("歌曲长度", 0));
+            tvSecondTime.setText(MusicUtil.formatTime(intent.getIntExtra("歌曲长度", 0)));
             mSongName = intent.getStringExtra("歌曲名");
-            isCollection();
-            mSinger = intent.getStringExtra("歌手");
+            setIv();
+            mSinger = intent.getStringExtra(SINGER);
             musicUrl = intent.getStringExtra("歌词Url");
         }
     }
@@ -238,42 +247,43 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            seekBar.setProgress(intent.getIntExtra("进度",0));
-            isPlaying = intent.getBooleanExtra("播放状态",false);
+            seekBar.setProgress(intent.getIntExtra(MUSIC_PROGRESS, 0));
+            tvFirstTime.setText(MusicUtil.formatTime(intent.getIntExtra(MUSIC_PROGRESS, 0)));
+            isPlaying = intent.getBooleanExtra("播放状态", false);
             setPlayMusicIv();
         }
     }
-    class getMusicIdBR extends BroadcastReceiver{
+
+    class getMusicIdBR extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            musicId = intent.getStringExtra("歌曲id");
+            musicId = intent.getStringExtra(MUSIC_ID);
         }
     }
-
 
 
     private void showShare() {
         OnekeyShare oks = new OnekeyShare();
         oks.disableSSOWhenAuthorize();
 
-  // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间等使用
+        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间等使用
         oks.setTitle(mSongName);
-  // titleUrl是标题的网络链接，QQ和QQ空间等使用
-        oks.setTitleUrl("http://music.baidu.com/song/"+musicId+"?share=1&fr=app_android");
-  // text是分享文本，所有平台都需要这个字段
+        // titleUrl是标题的网络链接，QQ和QQ空间等使用
+        oks.setTitleUrl("http://music.baidu.com/song/" + musicId + "?share=1&fr=app_android");
+        // text是分享文本，所有平台都需要这个字段
         oks.setText(mSinger);
-  // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-  //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
-  // url仅在微信（包括好友和朋友圈）中使用
+        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+        //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+        // url仅在微信（包括好友和朋友圈）中使用
         //oks.setUrl("http://sharesdk.cn");
-  // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
         oks.setComment("我是测试评论文本");
-  // site是分享此内容的网站名称，仅在QQ空间使用
+        // site是分享此内容的网站名称，仅在QQ空间使用
         oks.setSite(getString(R.string.app_name));
-  // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-        oks.setSiteUrl("http://music.baidu.com/song/"+musicId+"?share=1&fr=app_android");
-  // 启动分享GUI
+        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+        oks.setSiteUrl("http://music.baidu.com/song/" + musicId + "?share=1&fr=app_android");
+        // 启动分享GUI
         oks.show(this);
     }
 

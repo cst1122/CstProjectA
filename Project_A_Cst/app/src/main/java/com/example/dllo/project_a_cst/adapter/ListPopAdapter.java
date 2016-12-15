@@ -1,6 +1,7 @@
 package com.example.dllo.project_a_cst.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,6 +53,9 @@ public class ListPopAdapter extends RecyclerView.Adapter<ListPopAdapter.MyPopHol
         holder.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent("播放列表音乐");
+                intent.putExtra("第几首",position);
+                mContext.sendBroadcast(intent);
 
             }
         });

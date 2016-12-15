@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -35,16 +34,23 @@ import java.util.List;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
+import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_ID;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_LRC;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_NAME;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PAUSE;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PLAY;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PLAY_NEXT;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PROGRESS;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_TIME;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MY_MUSIC_LIST_LEFT;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MY_MUSIC_LIST_RIGHT;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.PICTURE;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.SINGER;
 
 public class MainActivity extends SupportActivity implements View.OnClickListener {
     private DrawerLayout mineDrawerLayout;
     private RecyclerView recyclerView;
-    private ImageView ivPlayMusic, ivPlayNext, ivMusicMenu,ivMusicImage;
+    private ImageView ivPlayMusic, ivPlayNext, ivMusicMenu, ivMusicImage;
     private ProgressBar progressBar;
     private Intent mIntent;
     private TextView tvSongName, tvSinger;
@@ -71,10 +77,10 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
 
         setContentView(R.layout.activity_main);
 
-        if (savedInstanceState == null){
-            loadRootFragment(R.id.rl_fragment,new MainFragment());
+        if (savedInstanceState == null) {
+            loadRootFragment(R.id.rl_fragment, new MainFragment());
         }
-        this.setFragmentAnimator(new FragmentAnimator(R.anim.h_fragment_enter,R.anim.h_fragment_exit,R.anim.h_fragment_pop_enter,R.anim.h_fragment_pop_exit));
+        this.setFragmentAnimator(new FragmentAnimator(R.anim.h_fragment_enter, R.anim.h_fragment_exit, R.anim.h_fragment_pop_enter, R.anim.h_fragment_pop_exit));
 
         initView();
         initData();
@@ -89,9 +95,11 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
             }
+
             @Override
             public void onDrawerOpened(View drawerView) {
             }
+
             @Override
             public void onDrawerClosed(View drawerView) {
                 mineDrawerLayout.setVisibility(View.GONE);
@@ -103,10 +111,6 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
 
             }
         });
-
-
-
-
 
 
     }
@@ -124,7 +128,7 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
         ivMusicImage = (ImageView) findViewById(R.id.iv_main_music_image);
     }
 
-    private void initData(){
+    private void initData() {
 //        musicData = (ArrayList<Mp3Info>) MusicUtil.getMp3Infos(this);
         mStartMService = new Intent();
         mStartMService.setClass(getApplicationContext(), MusicService.class);
@@ -134,32 +138,32 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
         mMySongListBR = new MySongListBR();
         IntentFilter intentFilter1 = new IntentFilter();
         intentFilter1.addAction("开启榜单");
-        registerReceiver(mMySongListBR,intentFilter1);
+        registerReceiver(mMySongListBR, intentFilter1);
 
         mMyGeDanBr = new MyGeDanBr();
         IntentFilter intentFilter2 = new IntentFilter();
         intentFilter2.addAction("歌单推荐");
-        registerReceiver(mMyGeDanBr,intentFilter2);
+        registerReceiver(mMyGeDanBr, intentFilter2);
 
         mGetMusicInformationBR = new getMusicInformationBR();
         IntentFilter intentFilter3 = new IntentFilter();
         intentFilter3.addAction("歌曲信息");
-        registerReceiver(mGetMusicInformationBR,intentFilter3);
+        registerReceiver(mGetMusicInformationBR, intentFilter3);
 
         mGetMusicProgressBR = new getMusicProgressBR();
         IntentFilter intentFilter4 = new IntentFilter();
         intentFilter4.addAction("音乐播放进度");
-        registerReceiver(mGetMusicProgressBR,intentFilter4);
+        registerReceiver(mGetMusicProgressBR, intentFilter4);
 
         mGetMusicIdBR = new getMusicIdBR();
         IntentFilter intentFilter5 = new IntentFilter();
         intentFilter5.addAction("歌曲地址集合");
-        registerReceiver(mGetMusicIdBR,intentFilter5);
+        registerReceiver(mGetMusicIdBR, intentFilter5);
 
         mGetMusicLrcBR = new getMusicLrcBR();
         IntentFilter intentFilter6 = new IntentFilter();
         intentFilter6.addAction("音乐是否播放");
-        registerReceiver(mGetMusicLrcBR,intentFilter6);
+        registerReceiver(mGetMusicLrcBR, intentFilter6);
 
         View.OnClickListener itemsOnClick = new View.OnClickListener() {
             @Override
@@ -167,7 +171,7 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
 
             }
         };
-        pop = new MediaplayerListPop(this,itemsOnClick);
+        pop = new MediaplayerListPop(this, itemsOnClick);
     }
 
 
@@ -177,7 +181,7 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
             case R.id.iv_main_play:
                 if (!isPlaying) {
                     mIntent = new Intent(MUSIC_PLAY);
-                }else {
+                } else {
                     mIntent = new Intent(MUSIC_PAUSE);
                 }
                 sendBroadcast(mIntent);
@@ -189,7 +193,6 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
             // 播放列表
             case R.id.iv_main_music_menu:
                 pop.setContext(this);
-                //ArrayList<ListPopBean> data = new ArrayList<>();
                 List<MyMusicPerson> data;
                 data = DBTool.getInstance().queryMusicAll();
                 List<MyMusicPerson> musicData = new ArrayList<>();
@@ -197,9 +200,9 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
                     MyMusicPerson bean = new MyMusicPerson();
                     bean.setTitle(data.get(i).getTitle());
                     bean.setArtist(data.get(i).getArtist());
-                    if (data.get(i).getId()!=null) {
+                    if (data.get(i).getId() != null) {
                         bean.setMusicId(data.get(i).getId());
-                    }else {
+                    } else {
                         bean.setMusicId(0);
                     }
                     bean.setUrl(data.get(i).getUrl());
@@ -208,30 +211,30 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
                 pop.setData((ArrayList<MyMusicPerson>) musicData);
                 pop.showAsDropDown(linearLayoutDown);
                 break;
-            // 弹出pop
+            // mediaPlayerActivity
             case R.id.linearlayout_main_down:
-                Intent intent = new Intent(MainActivity.this,MediaPlayerActivity.class);
-                intent.putExtra("歌手",tvSinger.getText().toString());
-                intent.putExtra("歌曲名",tvSongName.getText().toString());
-                intent.putExtra("时长",progressBar.getMax());
-                intent.putExtra("歌曲id",musicId);
-                if (musicLrc!=null) {
-                    intent.putExtra("歌词", musicLrc);
-                    Log.d("1123", musicLrc);
+                Intent intent = new Intent(MainActivity.this, MediaPlayerActivity.class);
+                intent.putExtra(SINGER, tvSinger.getText().toString());
+                intent.putExtra(MUSIC_NAME, tvSongName.getText().toString());
+                intent.putExtra(MUSIC_TIME, progressBar.getMax());
+                intent.putExtra(MUSIC_ID, musicId);
+                if (musicLrc != null) {
+                    intent.putExtra(MUSIC_LRC, musicLrc);
                 }
                 ivMusicImage.setDrawingCacheEnabled(true);
                 Bitmap bitmap = ivMusicImage.getDrawingCache();
-                intent.putExtra("图片",bitmap);
+                intent.putExtra(PICTURE, bitmap);
                 startActivity(intent);
                 ivMusicImage.setDrawingCacheEnabled(false);
                 break;
         }
     }
+
     // 设置底部播放按钮图片的方法
-    public void setPlayMusicIv(){
-        if (isPlaying){
+    public void setPlayMusicIv() {
+        if (isPlaying) {
             ivPlayMusic.setImageResource(R.mipmap.bt_minibar_pause_normal);
-        }else {
+        } else {
             ivPlayMusic.setImageResource(R.mipmap.bt_minibar_play_normal);
         }
     }
@@ -239,10 +242,10 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
     // 广播接收
 
     // 榜单网络音乐播放
-    class MySongListBR extends BroadcastReceiver{
+    class MySongListBR extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String url = MY_MUSIC_LIST_LEFT+intent.getIntExtra("type",1)+MY_MUSIC_LIST_RIGHT;
+            String url = MY_MUSIC_LIST_LEFT + intent.getIntExtra("type", 1) + MY_MUSIC_LIST_RIGHT;
             String imageUrl = intent.getStringExtra("图片网址");
             MyMusicLIstFragment myMusicLIstFragment = new MyMusicLIstFragment();
             myMusicLIstFragment.setUrl(url);
@@ -250,7 +253,8 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
             start(myMusicLIstFragment);
         }
     }
-    class MyGeDanBr extends BroadcastReceiver{
+
+    class MyGeDanBr extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -259,37 +263,40 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
         }
     }
 
-    class getMusicInformationBR extends BroadcastReceiver{
+    class getMusicInformationBR extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            tvSongName.setText(intent.getStringExtra("歌曲名"));
-            tvSinger.setText(intent.getStringExtra("歌手"));
-            progressBar.setMax(intent.getIntExtra("歌曲长度",0));
-            if (intent.getParcelableExtra("歌曲图片")!=null) {
+            tvSongName.setText(intent.getStringExtra(MUSIC_NAME));
+            tvSinger.setText(intent.getStringExtra(SINGER));
+            progressBar.setMax(intent.getIntExtra("歌曲长度", 0));
+            if (intent.getParcelableExtra("歌曲图片") != null) {
                 ivMusicImage.setImageBitmap((Bitmap) intent.getParcelableExtra("歌曲图片"));
-            }else {
+            } else {
                 Glide.with(MainActivity.this).load(intent.getStringExtra("图片网址")).into(ivMusicImage);
             }
             musicData = intent.getParcelableArrayListExtra("歌曲集合");
         }
     }
-    class getMusicProgressBR extends BroadcastReceiver{
+
+    class getMusicProgressBR extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            progressBar.setProgress(intent.getIntExtra("进度",0));
-            isPlaying = intent.getBooleanExtra("播放状态",false);
+            progressBar.setProgress(intent.getIntExtra(MUSIC_PROGRESS, 0));
+            isPlaying = intent.getBooleanExtra("播放状态", false);
             setPlayMusicIv();
         }
     }
-    class getMusicIdBR extends BroadcastReceiver{
+
+    class getMusicIdBR extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            musicId = intent.getStringExtra("歌曲id");
+            musicId = intent.getStringExtra(MUSIC_ID);
         }
     }
-    class getMusicLrcBR extends BroadcastReceiver{
+
+    class getMusicLrcBR extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {

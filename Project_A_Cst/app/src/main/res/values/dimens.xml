@@ -15,4 +15,16 @@
     <dimen name="fragment_mine_margin_ringt">20dp</dimen>
     <dimen name="fragment_mine_margin_left">50dp</dimen>
     <dimen name="fragment_mine_dividing_line_height">1px</dimen>
+    <dimen name="fragment_mine_margin_top">12dp</dimen>
+    <dimen name="five_dp">5dp</dimen>
+    <dimen name="one_three_zero_dp">130dp</dimen>
+    <dimen name="seven_zero_dp">70dp</dimen>
+    <dimen name="ten_five_dp">15dp</dimen>
+    <dimen name="one_two_zero_dp">120dp</dimen>
+    <dimen name="one_four_zero_dp">140dp</dimen>
+    <dimen name="two_zero_sp">20sp</dimen>
+    <dimen name="ten_dp">10dp</dimen>
+    <dimen name="three_zero_dp">30dp</dimen>
+    <dimen name="two_zero_dp">20dp</dimen>
+    <dimen name="four_zero_dp">40dp</dimen>
 </resources>

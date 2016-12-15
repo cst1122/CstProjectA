@@ -17,7 +17,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent" />
         <TextView
-            android:text="本地音乐"
+            android:text="@string/ben_di_music"
             android:textColor="@android:color/white"
             android:gravity="center_vertical"
             android:layout_weight="8"

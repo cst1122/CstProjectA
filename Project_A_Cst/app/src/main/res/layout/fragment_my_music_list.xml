@@ -19,7 +19,6 @@
                 android:fitsSystemWindows="true">
 
 
-            <!--排行详情 歌曲列表-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:text="播放全部/共有100首歌"
+                    android:text="@string/play_all_num"
                     android:textSize="15sp" />
 
                 <ImageView
@@ -76,7 +75,7 @@
                         app:contentScrim="#0005b1ef"
 
                         app:layout_scrollFlags="scroll|exitUntilCollapsed">
-                        <!--大图-->
+
                         <ImageView
                             android:id="@+id/fragment_menu_list_detail_top_bg"
                             android:layout_width="match_parent"
@@ -84,7 +83,7 @@
                             android:clickable="true"
                             android:scaleType="fitXY"
                             android:src="@mipmap/xingebang" />
-                        <!--日期-->
+
                         <TextView
                             android:clickable="true"
                             android:id="@+id/fragment_menu_list_detail_date"

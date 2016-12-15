@@ -5,7 +5,7 @@
               android:layout_height="match_parent">
 
     <TextView
-        android:text="我喜欢的单曲"
+        android:text="@string/my_like_music"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>

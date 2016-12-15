@@ -39,7 +39,7 @@ public class BearingFragment extends BaseFragment{
         NetHelper.myRequest(url, new MyNetListener<BearingBean>() {
             @Override
             public void successListener(BearingBean response) {
-                data = new ArrayList<BearingBean>();
+                data = new ArrayList<>();
                 data.add(response);
                 BearingAdapter adapter = new BearingAdapter(getActivity());
                 adapter.setData(data);

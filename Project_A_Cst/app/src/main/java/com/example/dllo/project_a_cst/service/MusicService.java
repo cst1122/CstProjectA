@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_NAME;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PAUSE;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PLAY;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PLAY_DANQU;
@@ -43,6 +44,8 @@ import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PLAY_NEX
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PLAY_SHUNXU;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PLAY_SUIJI;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PLAY_XUNHUAN;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PROGRESS;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.SINGER;
 
 /**
  * Created by dllo on 16/11/24.
@@ -62,6 +65,8 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
     private static Map imageMap, lrcMap;
     private MyNewMusicBR mMyNewMusicBR;
     private GetInternetMusicBR mGetInternetMusicBR;
+    private MakeMusicToProgressBR mMakeMusicToProgressBR;
+    private getListMusic mGetListMusic;
     private String type = "";
     private static int playMusicType = 1; // 播放模式  1代表顺序播放 2单曲循环 3列表循环 4随机播放
     private getMusicBR mGetMusicBR;
@@ -94,6 +99,16 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
         intentFilter1.addAction("播放本地音乐");
         registerReceiver(mGetMusicBR, intentFilter1);
 
+        mGetListMusic = new getListMusic();
+        IntentFilter intentFilter2 = new IntentFilter();
+        intentFilter2.addAction("播放列表音乐");
+        registerReceiver(mGetListMusic,intentFilter2);
+
+        mMakeMusicToProgressBR = new MakeMusicToProgressBR();
+        IntentFilter intentFilter3 = new IntentFilter();
+        intentFilter3.addAction("拖拽");
+        registerReceiver(mMakeMusicToProgressBR,intentFilter3);
+
     }
 
     private void StartNotification(int position, boolean isPlay, Bitmap bitmap) {
@@ -108,7 +123,7 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
         remoteViews.setTextViewText(R.id.tv_noti_singer, musicData.get(position).getArtist());
         remoteViews.setTextColor(R.id.tv_noti_singer, Color.BLACK);
         remoteViews.setTextViewText(R.id.tv_noti_song_name, musicData.get(position).getTitle());
-            remoteViews.setImageViewBitmap(R.id.iv_noti_music_image, bitmap);
+        remoteViews.setImageViewBitmap(R.id.iv_noti_music_image, bitmap);
 
         if (isPlay) {
             remoteViews.setImageViewResource(R.id.iv_noti_play, R.mipmap.bt_notificationbar_pause);
@@ -116,17 +131,17 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
             remoteViews.setImageViewResource(R.id.iv_noti_play, R.mipmap.bt_notificationbar_play);
         }
 
-        if (!isPlay) {
-            Intent intent1 = new Intent(this, MusicService.class);
-            intent1.putExtra("command", CommandPlay);
-            PendingIntent PIntent1 = PendingIntent.getService(this, 5, intent1, 0);
-            remoteViews.setOnClickPendingIntent(R.id.iv_noti_play, PIntent1);
-        } else {
-            Intent intent2 = new Intent(this, MusicService.class);
-            intent2.putExtra("command", CommandPause);
-            PendingIntent PIntent2 = PendingIntent.getService(this, 6, intent2, 0);
-            remoteViews.setOnClickPendingIntent(R.id.iv_noti_play, PIntent2);
-        }
+//        if (!isPlay) {
+//            Intent intent1 = new Intent(this, MusicService.class);
+//            intent1.putExtra("command", CommandPlay);
+//            PendingIntent PIntent1 = PendingIntent.getService(this, 5, intent1, 0);
+//            remoteViews.setOnClickPendingIntent(R.id.iv_noti_play, PIntent1);
+//        } else {
+//            Intent intent2 = new Intent(this, MusicService.class);
+//            intent2.putExtra("command", CommandPause);
+//            PendingIntent PIntent2 = PendingIntent.getService(this, 6, intent2, 0);
+//            remoteViews.setOnClickPendingIntent(R.id.iv_noti_play, PIntent2);
+//        }
         Intent intent3 = new Intent(this, MusicService.class);
         intent3.putExtra("command", CommandNext);
         PendingIntent PIntent3 = PendingIntent.getService(this, 7, intent3, 0);
@@ -165,39 +180,38 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
                 musicData.add(bean);
             }
         } else {
-            Log.d("MusicService", "222222222");
             musicData = (ArrayList<Mp3Info>) MusicUtil.getMp3Infos(this);
         }
 
-        int command = intent.getIntExtra("command", 0);
+        if (intent!=null) {
+            int command = intent.getIntExtra("command", 0);
 
-        switch (command) {
-            case CommandPlay:
-                mIntent = new Intent(MUSIC_PLAY);
-                sendBroadcast(mIntent);
-                break;
-            case CommandPause:
-                mIntent = new Intent(MUSIC_PAUSE);
-                sendBroadcast(mIntent);
-                break;
-            case CommandNext:
-                mIntent = new Intent(MUSIC_PLAY_NEXT);
-                sendBroadcast(mIntent);
-                break;
-            case CommandLast:
-                mIntent = new Intent(MUSIC_PLAY_LAST);
-                sendBroadcast(mIntent);
-                break;
-            case CommandClose:
-                mManager.cancelAll();
-                sendBroadcast(mIntent);
-                break;
+            switch (command) {
+                case CommandPlay:
+                    mIntent = new Intent(MUSIC_PLAY);
+                    sendBroadcast(mIntent);
+                    break;
+                case CommandPause:
+                    mIntent = new Intent(MUSIC_PAUSE);
+                    sendBroadcast(mIntent);
+                    break;
+                case CommandNext:
+                    mIntent = new Intent(MUSIC_PLAY_NEXT);
+                    sendBroadcast(mIntent);
+                    break;
+                case CommandLast:
+                    mIntent = new Intent(MUSIC_PLAY_LAST);
+                    sendBroadcast(mIntent);
+                    break;
+                case CommandClose:
+                    mManager.cancelAll();
+                    break;
 
+            }
         }
-        if (musicData!=null&&musicData.size()>0) {
+        if (musicData != null && musicData.size() > 0) {
             StartNotification(mposition, isPlaying, MusicUtil.getArtwork(this, musicData.get(mposition).getId(), musicData.get(mposition).getAlbumId(), true, true));
         }
-
 
 
         return super.onStartCommand(intent, flags, startId);
@@ -214,6 +228,7 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
         unregisterReceiver(mMyNewMusicBR);
         unregisterReceiver(mGetInternetMusicBR);
         unregisterReceiver(mGetMusicBR);
+        unregisterReceiver(mGetListMusic);
         Flag = false;
         super.onDestroy();
     }
@@ -265,7 +280,7 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
     public void onPrepared(MediaPlayer mp) {
         mediaPlayer.start();
         int max = mediaPlayer.getDuration();
-        Log.d("music", musicData.get(mposition).getArtist() + musicData.get(mposition).getTitle() + "^*&#$^$#$");
+        Log.d("music", musicData.get(mposition).getArtist() + musicData.get(mposition).getTitle() + "$#$");
         isPlaying = true;
         SendMusicIsPlay();
         SendMusicInformation(max);
@@ -275,9 +290,6 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
                 DBTool.getInstance().deleteMusicAll();
             }
             for (int i = 0; i < musicData.size(); i++) {
-//                            MyPerson person = new MyPerson(null,musicData.get(i).getTitle(),
-//                                    musicData.get(i).getArtist(),musicData.get(i).getId()+"",musicData.get(i).getUrl());
-//                            DBTool.getInstance().insertPerson(person);
                 MyMusicPerson person = new MyMusicPerson(null, musicData.get(i).getId()
                         , musicData.get(i).getTitle(), musicData.get(i).getArtist()
                         , musicData.get(i).getAlbumId(), musicData.get(i).getUrl());
@@ -316,11 +328,22 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
                     isPlaying = false;
                     break;
                 case MUSIC_PLAY_NEXT:
-                    mposition++;
-                    if (mposition > musicData.size() - 1) {
-                        mposition = 0;
+                    switch (playMusicType) {
+                        case 1:
+                            mposition++;
+                            if (mposition > musicData.size() - 1) {
+                                mposition = 0;
+                            }
+                            play(mposition);
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            break;
+                        case 4:
+                            break;
+
                     }
-                    play(mposition);
                     break;
                 case MUSIC_PLAY_LAST:
                     mposition--;
@@ -358,8 +381,8 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
 
     private void SendMusicInformation(int max) {
         mIntent = new Intent("歌曲信息");
-        mIntent.putExtra("歌曲名", musicData.get(mposition).getTitle());
-        mIntent.putExtra("歌手", musicData.get(mposition).getArtist());
+        mIntent.putExtra(MUSIC_NAME, musicData.get(mposition).getTitle());
+        mIntent.putExtra(SINGER, musicData.get(mposition).getArtist());
         mIntent.putExtra("歌曲长度", max);
         if (musicData.get(mposition).getId() != 0 && musicData.get(mposition).getAlbumId() != 0) {
             mIntent.putExtra("歌曲图片", MusicUtil.getArtwork(this, musicData.get(mposition).getId(), musicData.get(mposition).getAlbumId(), true, true));
@@ -384,7 +407,7 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
                         while (Flag) {
                             if (mediaPlayer.isPlaying()) {
                                 progress = mediaPlayer.getCurrentPosition();
-                                mIntent.putExtra("进度", progress);
+                                mIntent.putExtra(MUSIC_PROGRESS, progress);
                             }
                             mIntent.putExtra("播放状态", mediaPlayer.isPlaying());
                             sendBroadcast(mIntent);
@@ -405,7 +428,6 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
         @Override
         public void onReceive(Context context, Intent intent) {
             mposition = intent.getIntExtra("第几首歌", 0);
-            Log.d("1122", "????");
             if (!type.equals(intent.getStringExtra("歌单"))) {
                 type = intent.getStringExtra("歌单");
                 musicData = new ArrayList<>();
@@ -418,11 +440,19 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
                 }
             }
             if (musicData.get(mposition).getUrl() != null) {
-                Log.d("1122", mposition + "  " + musicData.size());
                 play(mposition);
 
             }
 
+        }
+    }
+    class MakeMusicToProgressBR extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (mediaPlayer!=null&&mediaPlayer.isPlaying()){
+                mediaPlayer.seekTo(intent.getIntExtra(MUSIC_PROGRESS,progress));
+            }
         }
     }
 
@@ -434,6 +464,16 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
             musicData = intent.getParcelableArrayListExtra("本地音乐");
             mposition = intent.getIntExtra("第几首", 0);
             play(mposition);
+        }
+    }
+    class getListMusic extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mposition = intent.getIntExtra("第几首",0);
+            if (musicData!=null){
+                play(mposition);
+            }
         }
     }
 
