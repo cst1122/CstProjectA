@@ -56,7 +56,7 @@ public class MainFragment extends SupportFragment implements View.OnClickListene
         viewPager = (ViewPager) view.findViewById(R.id.viewpager_main_fragment);
         tabLayout = (TabLayout) view.findViewById(R.id.tablayout_main_fragment);
         drawerLRv = (RecyclerView) _mActivity.findViewById(R.id.main_drawerlayout_recyvlerview);
-        mDrawerLayout = (DrawerLayout) _mActivity.findViewById(R.id.dl_mine);
+        mDrawerLayout = (DrawerLayout) getActivity().findViewById(R.id.dl_mine);
         mManager = new LinearLayoutManager(_mActivity,LinearLayoutManager.VERTICAL,false);
     }
 

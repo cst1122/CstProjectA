@@ -16,10 +16,8 @@ import com.google.gson.Gson;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
-
-
 /**
- * Created by leisure on 2016/11/27.
+ * Created by dllo on 16/12/7.
  */
 
 public class GsonRequest<T> extends Request<T> {

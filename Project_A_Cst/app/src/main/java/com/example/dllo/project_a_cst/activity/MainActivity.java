@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.baidu.frontia.Frontia;
 import com.bumptech.glide.Glide;
 import com.example.dllo.project_a_cst.R;
 import com.example.dllo.project_a_cst.else_class.MediaplayerListPop;
@@ -34,10 +35,14 @@ import java.util.List;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
+import static com.example.dllo.project_a_cst.my_class.MyConstants.IS_MUSIC_PLAYING;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.LRC_URL;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_DURATION;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_ID;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_LRC;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_NAME;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PAUSE;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PICTURE;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PLAY;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PLAY_NEXT;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PROGRESS;
@@ -45,6 +50,7 @@ import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_TIME;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MY_MUSIC_LIST_LEFT;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MY_MUSIC_LIST_RIGHT;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.PICTURE;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.PICTURE_URL;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.SINGER;
 
 public class MainActivity extends SupportActivity implements View.OnClickListener {
@@ -71,12 +77,16 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_main);
 
+        // 第三方登录
+        Frontia.init(this.getApplicationContext(),"AZYoLNqHix6EoGR0vyUq1ZHQ");
+
+
+        //当Activity创建时 加载一个supportFragment
         if (savedInstanceState == null) {
             loadRootFragment(R.id.rl_fragment, new MainFragment());
         }
@@ -162,7 +172,7 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
 
         mGetMusicLrcBR = new getMusicLrcBR();
         IntentFilter intentFilter6 = new IntentFilter();
-        intentFilter6.addAction("音乐是否播放");
+        intentFilter6.addAction(IS_MUSIC_PLAYING);
         registerReceiver(mGetMusicLrcBR, intentFilter6);
 
         View.OnClickListener itemsOnClick = new View.OnClickListener() {
@@ -246,7 +256,7 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
         @Override
         public void onReceive(Context context, Intent intent) {
             String url = MY_MUSIC_LIST_LEFT + intent.getIntExtra("type", 1) + MY_MUSIC_LIST_RIGHT;
-            String imageUrl = intent.getStringExtra("图片网址");
+            String imageUrl = intent.getStringExtra(PICTURE_URL);
             MyMusicLIstFragment myMusicLIstFragment = new MyMusicLIstFragment();
             myMusicLIstFragment.setUrl(url);
             myMusicLIstFragment.setImageUrl(imageUrl);
@@ -254,6 +264,7 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
         }
     }
 
+    // 歌单
     class MyGeDanBr extends BroadcastReceiver {
 
         @Override
@@ -263,21 +274,23 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
         }
     }
 
+    // 获取音乐信息
     class getMusicInformationBR extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             tvSongName.setText(intent.getStringExtra(MUSIC_NAME));
             tvSinger.setText(intent.getStringExtra(SINGER));
-            progressBar.setMax(intent.getIntExtra("歌曲长度", 0));
-            if (intent.getParcelableExtra("歌曲图片") != null) {
-                ivMusicImage.setImageBitmap((Bitmap) intent.getParcelableExtra("歌曲图片"));
+            progressBar.setMax(intent.getIntExtra(MUSIC_DURATION, 0));
+            if (intent.getParcelableExtra(MUSIC_PICTURE) != null) {
+                ivMusicImage.setImageBitmap((Bitmap) intent.getParcelableExtra(MUSIC_PICTURE));
             } else {
-                Glide.with(MainActivity.this).load(intent.getStringExtra("图片网址")).into(ivMusicImage);
+                Glide.with(MainActivity.this).load(intent.getStringExtra(PICTURE_URL)).into(ivMusicImage);
             }
             musicData = intent.getParcelableArrayListExtra("歌曲集合");
         }
     }
 
+    // 获取进度
     class getMusicProgressBR extends BroadcastReceiver {
 
         @Override
@@ -288,6 +301,7 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
         }
     }
 
+
     class getMusicIdBR extends BroadcastReceiver {
 
         @Override
@@ -296,11 +310,12 @@ public class MainActivity extends SupportActivity implements View.OnClickListene
         }
     }
 
+    //歌词
     class getMusicLrcBR extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            musicLrc = intent.getStringExtra("歌词网址");
+            musicLrc = intent.getStringExtra(LRC_URL);
         }
     }
 

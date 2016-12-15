@@ -35,8 +35,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.example.dllo.project_a_cst.my_class.MyConstants.COMMAND;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.DRAG;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.IS_MUSIC_PLAYING;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.IS_PLAYING;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.LRC_URL;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_DURATION;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_INFORMATION;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_NAME;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PAUSE;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PICTURE;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PLAY;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PLAY_DANQU;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PLAY_LAST;
@@ -45,6 +53,10 @@ import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PLAY_SHU
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PLAY_SUIJI;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PLAY_XUNHUAN;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_PROGRESS;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.MUSIC_URL_LIST;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.PICTURE_URL;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.PLAY_BEN_DI_MUSIC;
+import static com.example.dllo.project_a_cst.my_class.MyConstants.PLAY_LIST_MUSIC;
 import static com.example.dllo.project_a_cst.my_class.MyConstants.SINGER;
 
 /**
@@ -91,23 +103,23 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
         registerFilter();
         mGetInternetMusicBR = new GetInternetMusicBR();
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("歌曲地址集合");
+        intentFilter.addAction(MUSIC_URL_LIST);
         registerReceiver(mGetInternetMusicBR, intentFilter);
 
         mGetMusicBR = new getMusicBR();
         IntentFilter intentFilter1 = new IntentFilter();
-        intentFilter1.addAction("播放本地音乐");
+        intentFilter1.addAction(PLAY_BEN_DI_MUSIC);
         registerReceiver(mGetMusicBR, intentFilter1);
 
         mGetListMusic = new getListMusic();
         IntentFilter intentFilter2 = new IntentFilter();
-        intentFilter2.addAction("播放列表音乐");
-        registerReceiver(mGetListMusic,intentFilter2);
+        intentFilter2.addAction(PLAY_LIST_MUSIC);
+        registerReceiver(mGetListMusic, intentFilter2);
 
         mMakeMusicToProgressBR = new MakeMusicToProgressBR();
         IntentFilter intentFilter3 = new IntentFilter();
-        intentFilter3.addAction("拖拽");
-        registerReceiver(mMakeMusicToProgressBR,intentFilter3);
+        intentFilter3.addAction(DRAG);
+        registerReceiver(mMakeMusicToProgressBR, intentFilter3);
 
     }
 
@@ -143,17 +155,17 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
 //            remoteViews.setOnClickPendingIntent(R.id.iv_noti_play, PIntent2);
 //        }
         Intent intent3 = new Intent(this, MusicService.class);
-        intent3.putExtra("command", CommandNext);
+        intent3.putExtra(COMMAND, CommandNext);
         PendingIntent PIntent3 = PendingIntent.getService(this, 7, intent3, 0);
         remoteViews.setOnClickPendingIntent(R.id.iv_noti_next, PIntent3);
 
         Intent intent4 = new Intent(this, MusicService.class);
-        intent4.putExtra("command", CommandLast);
+        intent4.putExtra(COMMAND, CommandLast);
         PendingIntent PIntent4 = PendingIntent.getService(this, 8, intent4, 0);
         remoteViews.setOnClickPendingIntent(R.id.iv_noti_last, PIntent4);
 
         Intent intent5 = new Intent(this, MusicService.class);
-        intent5.putExtra("command", CommandClose);
+        intent5.putExtra(COMMAND, CommandClose);
         PendingIntent PIntent5 = PendingIntent.getService(this, 9, intent5, 0);
         remoteViews.setOnClickPendingIntent(R.id.iv_noti_finish, PIntent5);
 
@@ -183,8 +195,8 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
             musicData = (ArrayList<Mp3Info>) MusicUtil.getMp3Infos(this);
         }
 
-        if (intent!=null) {
-            int command = intent.getIntExtra("command", 0);
+        if (intent != null) {
+            int command = intent.getIntExtra(COMMAND, 0);
 
             switch (command) {
                 case CommandPlay:
@@ -205,6 +217,7 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
                     break;
                 case CommandClose:
                     mManager.cancelAll();
+
                     break;
 
             }
@@ -300,13 +313,25 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        Log.d("music", "下一曲");
-        mIntent = new Intent(MUSIC_PLAY_NEXT);
-        try {
-            Thread.sleep(2000);
-            sendBroadcast(mIntent);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        switch (playMusicType) {
+            case 1:
+                Log.d("music", "下一曲");
+                mIntent = new Intent(MUSIC_PLAY_NEXT);
+                try {
+                    Thread.sleep(2000);
+                    sendBroadcast(mIntent);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 2:
+                play(mposition);
+                break;
+            case 3:
+                break;
+            case 4:
+
+                break;
         }
     }
 
@@ -337,12 +362,16 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
                             play(mposition);
                             break;
                         case 2:
+                            mposition++;
+                            if (mposition > musicData.size() - 1) {
+                                mposition = 0;
+                            }
+                            play(mposition);
                             break;
                         case 3:
                             break;
                         case 4:
                             break;
-
                     }
                     break;
                 case MUSIC_PLAY_LAST:
@@ -365,30 +394,30 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
     }
 
     private void SendMusicIsPlay() {
-        mIntent = new Intent("音乐是否播放");
+        mIntent = new Intent(IS_MUSIC_PLAYING);
         if (mediaPlayer.isPlaying()) {
             isPlaying = true;
         } else {
             isPlaying = false;
         }
-        mIntent.putExtra("是否播放", isPlaying);
+        mIntent.putExtra(IS_PLAYING, isPlaying);
         if (lrcMap != null) {
-            mIntent.putExtra("歌词网址", lrcMap.get(mposition).toString());
+            mIntent.putExtra(LRC_URL, lrcMap.get(mposition).toString());
         }
 
         sendBroadcast(mIntent);
     }
 
     private void SendMusicInformation(int max) {
-        mIntent = new Intent("歌曲信息");
+        mIntent = new Intent(MUSIC_INFORMATION);
         mIntent.putExtra(MUSIC_NAME, musicData.get(mposition).getTitle());
         mIntent.putExtra(SINGER, musicData.get(mposition).getArtist());
-        mIntent.putExtra("歌曲长度", max);
+        mIntent.putExtra(MUSIC_DURATION, max);
         if (musicData.get(mposition).getId() != 0 && musicData.get(mposition).getAlbumId() != 0) {
-            mIntent.putExtra("歌曲图片", MusicUtil.getArtwork(this, musicData.get(mposition).getId(), musicData.get(mposition).getAlbumId(), true, true));
+            mIntent.putExtra(MUSIC_PICTURE, MusicUtil.getArtwork(this, musicData.get(mposition).getId(), musicData.get(mposition).getAlbumId(), true, true));
         } else {
             if (imageMap != null) {
-                mIntent.putExtra("图片网址", imageMap.get(mposition).toString());
+                mIntent.putExtra(PICTURE_URL, imageMap.get(mposition).toString());
             }
         }
         mIntent.putExtra("歌词Url", musicData.get(mposition).getUrl());
@@ -446,12 +475,13 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
 
         }
     }
-    class MakeMusicToProgressBR extends BroadcastReceiver{
+
+    class MakeMusicToProgressBR extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (mediaPlayer!=null&&mediaPlayer.isPlaying()){
-                mediaPlayer.seekTo(intent.getIntExtra(MUSIC_PROGRESS,progress));
+            if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                mediaPlayer.seekTo(intent.getIntExtra(MUSIC_PROGRESS, progress));
             }
         }
     }
@@ -466,12 +496,13 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
             play(mposition);
         }
     }
-    class getListMusic extends BroadcastReceiver{
+
+    class getListMusic extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            mposition = intent.getIntExtra("第几首",0);
-            if (musicData!=null){
+            mposition = intent.getIntExtra("第几首", 0);
+            if (musicData != null) {
                 play(mposition);
             }
         }

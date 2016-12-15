@@ -46,4 +46,6 @@ dependencies {
     compile files('libs/MobTools-2016.1107.1809.jar')
     compile 'org.jetbrains:annotations-java5:15.0'
     compile 'org.greenrobot:greendao:3.2.0'
+    compile files('libs/baidu-android-openapi-sdk.jar')
+    compile files('libs/Baidu-Frontia-Full-Debug-2.0.6.jar')
 }

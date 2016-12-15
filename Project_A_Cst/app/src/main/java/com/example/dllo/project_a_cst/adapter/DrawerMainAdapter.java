@@ -1,14 +1,22 @@
 package com.example.dllo.project_a_cst.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.frontia.Frontia;
+import com.baidu.frontia.FrontiaUser;
+import com.baidu.frontia.api.FrontiaAuthorization;
+import com.baidu.frontia.api.FrontiaAuthorizationListener;
+import com.bumptech.glide.Glide;
 import com.example.dllo.project_a_cst.R;
 
 import java.util.ArrayList;
@@ -22,6 +30,7 @@ public class DrawerMainAdapter<T> extends RecyclerView.Adapter {
     private Context context;
     private String type;
     private ArrayList<T> data;
+    private FrontiaAuthorization mMAuthorization;
 
     public DrawerMainAdapter(Context context, String type) {
         this.context = context;
@@ -58,9 +67,19 @@ public class DrawerMainAdapter<T> extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
 
         switch (type) {
+            case "更多":
+                ((MyFirstHolder) holder).ll.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMAuthorization = Frontia.getAuthorization();
+                       BaiDuLogin(((MyFirstHolder) holder).tvLogin,((MyFirstHolder) holder).ivLogin);
+
+                    }
+                });
+                break;
             case "搜索":
                 ((MySecondHolder) holder).textView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -81,28 +100,18 @@ public class DrawerMainAdapter<T> extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         int num = 1;
-        switch (type) {
-            case "更多":
-                num = 1;
-                break;
-            case "搜索":
-                num = 1;
-                break;
-            case "歌手":
-                num = 1;
-                break;
-            case "歌曲分类":
-                num = 1;
-                break;
-
-        }
         return num;
     }
 
     class MyFirstHolder extends RecyclerView.ViewHolder {
-
+        private LinearLayout ll;
+        private TextView tvLogin;
+        private ImageView ivLogin;
         public MyFirstHolder(View itemView) {
             super(itemView);
+            ll = (LinearLayout) itemView.findViewById(R.id.login);
+            tvLogin = (TextView) itemView.findViewById(R.id.tv_login);
+            ivLogin = (ImageView) itemView.findViewById(R.id.iv_login);
         }
     }
 
@@ -129,5 +138,42 @@ public class DrawerMainAdapter<T> extends RecyclerView.Adapter {
         public MyFourthHolder(View itemView) {
             super(itemView);
         }
+    }
+
+    protected void BaiDuLogin(final TextView tvLogin, final ImageView ivLogin){
+        ArrayList<String> scope = new ArrayList<>();
+        scope.add("basic");
+        scope.add("netdisk");
+        mMAuthorization.authorize((Activity) context, FrontiaAuthorization.MediaType.BAIDU.toString(), scope, new FrontiaAuthorizationListener.AuthorizationListener() {
+            @Override
+            public void onSuccess(FrontiaUser result) {
+                if (null != tvLogin) {
+                    tvLogin.setText("social id: " + result.getId() + "\n" + "token: " + result.getAccessToken() + "\n" + "expired: " + result.getExpiresIn());
+                    mMAuthorization.getUserInfo(FrontiaAuthorization.MediaType.BAIDU.toString(), new FrontiaAuthorizationListener.UserInfoListener() {
+                        @Override
+                        public void onSuccess(FrontiaUser.FrontiaUserDetail frontiaUserDetail) {
+                            Glide.with(context).load(frontiaUserDetail.getHeadUrl()).into(ivLogin);
+                        }
+
+                        @Override
+                        public void onFailure(int i, String s) {
+
+                        }
+                    });
+                }
+            }
+            @Override
+            public void onFailure(int errCode, String errMsg) {
+                if (null != tvLogin) {
+                    tvLogin.setText("errCode:" + errCode + ", errMsg:" + errMsg);
+                }
+            }
+            @Override
+            public void onCancel() {
+                if (null != tvLogin) {
+                    tvLogin.setText("cancel");
+                }
+            }
+        });
     }
 }

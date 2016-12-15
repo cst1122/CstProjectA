@@ -12,7 +12,7 @@ import com.android.volley.toolbox.Volley;
 import java.util.HashMap;
 
 /**
- * Created by leisure on 2016/11/27.
+ * Created by dllo on 16/12/7.
  */
 public class NetHelper {
     private RequestQueue mRequestQueue;

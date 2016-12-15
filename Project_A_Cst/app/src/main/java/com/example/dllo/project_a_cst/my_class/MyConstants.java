@@ -46,6 +46,7 @@ public class MyConstants {
     public static final String MUSIC_PLAY_DANQU = "com.example.dllo.project_a_cst.music_play_danqu";
     public static final String MUSIC_PLAY_XUNHUAN = "com.example.dllo.project_a_cst.music_play_xunhuan";
     public static final String MUSIC_PLAY_SUIJI = "com.example.dllo.project_a_cst.music_play_suiji";
+
     public static final String SINGER = "歌手";
     public static final String MUSIC_NAME = "歌曲名";
     public static final String MUSIC_TIME = "时长";
@@ -53,4 +54,16 @@ public class MyConstants {
     public static final String MUSIC_ID = "歌曲id";
     public static final String MUSIC_LRC = "歌词";
     public static final String MUSIC_PROGRESS = "进度";
+    public static final String MUSIC_URL_LIST = "歌曲地址集合";
+    public static final String PLAY_BEN_DI_MUSIC = "播放本地音乐";
+    public static final String PLAY_LIST_MUSIC = "播放列表音乐";
+    public static final String DRAG = "拖拽";
+    public static final String COMMAND = "command";
+    public static final String IS_MUSIC_PLAYING = "音乐是否播放";
+    public static final String IS_PLAYING = "是否播放";
+    public static final String LRC_URL = "歌词网址";
+    public static final String MUSIC_INFORMATION = "歌曲信息";
+    public static final String MUSIC_DURATION = "歌曲长度";
+    public static final String MUSIC_PICTURE = "歌曲图片";
+    public static final String PICTURE_URL = "图片网址";
 }

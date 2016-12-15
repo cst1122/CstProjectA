@@ -1,8 +1,8 @@
 package com.example.dllo.project_a_cst.else_class;
 
-import android.app.Application;
 import android.content.Context;
 
+import com.baidu.frontia.FrontiaApplication;
 import com.example.dllo.project_a_cst.my_database.DaoMaster;
 import com.example.dllo.project_a_cst.my_database.DaoSession;
 
@@ -10,7 +10,7 @@ import com.example.dllo.project_a_cst.my_database.DaoSession;
  * Created by dllo on 16/12/7.
  */
 
-public class MyApp extends Application {
+public class MyApp extends FrontiaApplication {
     private static Context sContext;
     private static DaoMaster sDaoMaster;
     private static DaoSession sDaoSession;
